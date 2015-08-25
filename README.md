@@ -2,7 +2,7 @@
 
 A simple but complete Gem to add configuration files to your Ruby script / Gem
 
-WORK IN PROGRESS, Nowhere near ready for use. This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
+WORK IN PROGRESS, Nowhere near ready for use, and if fact currently does almost nothing! This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
 
 ## Installation
 
@@ -22,8 +22,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'confoog'
 
+settings = Confoog::Settings.new
+```
+Confoog will take several parameters on creation, to specify the dafault config file and location. for example :
+```ruby
+settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
+```
+If these are not specified, Confoog will use the following defaults :
+```ruby
+location: '~/'
+filename: '.confoog'
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
