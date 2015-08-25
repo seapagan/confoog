@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Seapagan"]
   spec.email         = ["seapagan@gmail.com"]
 
-  spec.summary       = %q{Simple but complete Gem to add configuration files to your Ruby script / Gem}
+  spec.summary       = %q{A simple but complete Gem to add configuration files to your Ruby script / Gem}
   spec.description   = %q{WORK IN PROGRESS, No where near ready for use. This will add a class that takes care of all your configuration needs for Ruby scripts and Gems}
   spec.homepage      = "https://github.com/seapagan/confoog"
   spec.license       = "MIT"
@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "pry"
 end
