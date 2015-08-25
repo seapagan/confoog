@@ -10,7 +10,7 @@ describe Confoog do
 
   it 'should accept no options when created but should set sensible defaults' do
     settings=subject.new
-    expect(settings).not_to be nil
+    expect(settings).to be_an_instance_of subject
     expect(settings.config_filename).to be Confoog::DEFAULT_CONFIG
     expect(settings.config_location).to eq '~/'
   end
@@ -24,5 +24,6 @@ describe Confoog do
     expect(settings.config_filename).to eq '.myconfigfile'
     expect(settings.config_location).to eq '/put/it/here'
   end
+
   
 end
