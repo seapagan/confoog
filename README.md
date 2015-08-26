@@ -27,7 +27,7 @@ require 'confoog'
 
 settings = Confoog::Settings.new
 ```
-Confoog will take several parameters on creation, to specify the dafault config file and location. for example :
+Confoog will take several parameters on creation, to specify the default config file and location. For example :
 ```ruby
 settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
 ```
