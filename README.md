@@ -31,14 +31,26 @@ Confoog will take several parameters on creation, to specify the dafault config 
 ```ruby
 settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
 ```
+There are other optional flags or variables that can be passed on creation. If not specified these will default to false:
+```ruby
+# Should a missing configuration file be created or not
+create_file: true | false
+```
 If these are not specified, Confoog will use the following defaults :
 ```ruby
 location: '~/'
 filename: '.confoog'
+create_file: false
 ```
+
+## To Do
+
+Thoughts in no particular order
+- add a status / error variable to the class for use by callers and a set of standard error constants.
+
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests (or simply `rake`). You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
