@@ -17,15 +17,20 @@ module Confoog
       @config_location = options[:location] || '~/'
       @config_filename = options[:filename] || DEFAULT_CONFIG
 
-      # make sure the file exists ...
-      if File.exist?(File.expand_path(File.join @config_location, @config_filename))
+      # make sure the file exists or can be created...
+      check_exists(options)
+    end
 
+    private
+
+    def check_exists(options)
+      if File.exist?(File.expand_path(File.join @config_location, @config_filename))
         status['config_exists'] = true
       else
-        if options[:create_file] == true then
+        if options[:create_file] == true
           full_path = File.expand_path(File.join @config_location, @config_filename)
           File.new(full_path, 'w').close
-          if File.exist? full_path then
+          if File.exist? full_path
             status['config_exists'] = true
           end
         else
