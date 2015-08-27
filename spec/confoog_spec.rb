@@ -16,24 +16,24 @@ describe Confoog do
         expect(settings).to be_an_instance_of subject
       end
       it 'should set sensible defaults' do
-        expect(settings.config_filename).to be Confoog::DEFAULT_CONFIG
-        expect(settings.config_location).to eq '~/'
+        expect(settings.filename).to be Confoog::DEFAULT_CONFIG
+        expect(settings.location).to eq '~/'
       end
     end
 
     context "with parameters" do
       it 'should accept a location for the configuration file' do
         settings=subject.new(location: '/home/user/configs')
-        expect(settings.config_location).to eq '/home/user/configs'
+        expect(settings.location).to eq '/home/user/configs'
       end
       it 'should accept a filename for the configuration file' do
         settings=subject.new(filename: '.configfile')
-        expect(settings.config_filename).to eq '.configfile'
+        expect(settings.filename).to eq '.configfile'
       end
       it 'should accept both location and filename' do
         settings=subject.new(filename: '.myconfigfile', location: '/put/it/here')
-        expect(settings.config_filename).to eq '.myconfigfile'
-        expect(settings.config_location).to eq '/put/it/here'
+        expect(settings.filename).to eq '.myconfigfile'
+        expect(settings.location).to eq '/put/it/here'
       end
     end
 
@@ -75,10 +75,10 @@ describe Confoog do
 
     it "should not allow us to change the filename or location" do
       settings=subject.new(location: '/home/tests', filename: '.i_do_exist')
-      settings.config_location = '/home/moretests'
-      expect(settings.config_location).to eq '/home/tests'
-      settings.config_filename = '.newfile'
-      expect(settings.config_filename).to eq '.i_do_exist'
+      settings.location = '/home/moretests'
+      expect(settings.location).to eq '/home/tests'
+      settings.filename = '.newfile'
+      expect(settings.filename).to eq '.i_do_exist'
     end
   end
 end
