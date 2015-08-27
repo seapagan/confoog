@@ -1,4 +1,5 @@
 # Confoog
+[![Build Status](https://travis-ci.org/seapagan/confoog.svg)](https://travis-ci.org/seapagan/confoog)
 
 A simple but complete Gem to add configuration files to your Ruby script / Gem
 
