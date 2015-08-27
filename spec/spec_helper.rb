@@ -1,4 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'coveralls'
+Coveralls.wear!
+
 require 'pp' # work around https://github.com/defunkt/fakefs/issues/99
 require 'confoog'
 require 'fakefs/spec_helpers'
