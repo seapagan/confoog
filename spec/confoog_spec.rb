@@ -14,6 +14,7 @@ describe Confoog do
       # create fake dir and files
       FileUtils.mkdir_p("/home/tests")
       FileUtils.mkdir_p(File.expand_path('~/'))
+
       Dir.chdir("/home/tests") do
         File.new(".i_do_exist", "w").close
       end
@@ -64,6 +65,16 @@ describe Confoog do
         expect(settings.status['config_exists']).to be true
         expect(File).to exist('/home/tests/.i_should_be_created')
         expect(settings.status['errors']).to eq Confoog::INFO_FILE_CREATED
+      end
+      it 'should return a relevant error if the file was not able to be created' do
+        # directory not exist
+        settings=subject.new(location: '/directory/doesnt/exist', filename: '.i_wont_be_created', create_file: true)
+        expect(settings.status['errors']).to eq Confoog::ERR_CANT_CREATE_FILE
+        expect(settings.status['config_exists']).to be false
+        expect(File).not_to exist('/directory/doesnt/exist/.i_wont_be_created')
+        # directory not writeable
+        # cant seem to get fakefs to change attributes on files so cant create
+        # a read-only or not-owned file to test. Works on a real fs though.
       end
     end
   end

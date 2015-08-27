@@ -8,6 +8,7 @@ module Confoog
   ERR_NO_ERROR = 0
   ERR_FILE_NOT_EXIST = 1
   ERR_CANT_CHANGE = 2
+  ERR_CANT_CREATE_FILE = 4
 
   #Info messages to be returned
   INFO_FILE_CREATED = 256
@@ -40,7 +41,7 @@ module Confoog
     end
 
     def filename=(filename)
-      # dummy method currently to stop changing filename by caller once creeated,
+      # dummy method currently to stop changing filename by caller once created,
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
       @status['errors']= ERR_CANT_CHANGE
@@ -54,10 +55,13 @@ module Confoog
       else
         if options[:create_file] == true
           full_path = File.expand_path(File.join @location, @filename)
-          File.new(full_path, 'w').close
-          if File.exist? full_path
+          begin
+            file = File.new(full_path, 'w').close
             @status['config_exists'] = true
             @status['errors'] = INFO_FILE_CREATED
+          rescue => e
+            @status['config_exists'] = false
+            @status['errors'] = ERR_CANT_CREATE_FILE
           end
         else
           @status['config_exists'] = false
