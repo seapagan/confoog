@@ -4,6 +4,14 @@ module Confoog
 
   DEFAULT_CONFIG = '.confoog'
 
+  #Error messages to be returned
+  ERR_NO_ERROR = 0
+  ERR_FILE_NOT_EXIST = 1
+  ERR_CANT_CHANGE = 2
+
+  #Info messages to be returned
+  INFO_FILE_CREATED = 256
+
   class Settings
     attr_reader :filename, :location, :status
 
@@ -17,36 +25,43 @@ module Confoog
       @location = options[:location] || '~/'
       @filename = options[:filename] || DEFAULT_CONFIG
 
+      @status['errors'] = ERR_NO_ERROR
+
       # make sure the file exists or can be created...
       check_exists(options)
+
     end
 
     def location=(location)
       # dummy method currently to stop changing location by caller once created,
       # but not raise error.
-      # In future will return an error flag in the ':status' variable.
+      #  - Return an error flag in the ':status' variable.
+      @status['errors']= ERR_CANT_CHANGE
     end
 
     def filename=(filename)
       # dummy method currently to stop changing filename by caller once creeated,
       # but not raise error.
-      # In future will return an error flag in the ':status' variable.
+      #  - Return an error flag in the ':status' variable.
+      @status['errors']= ERR_CANT_CHANGE
     end
 
     private
 
     def check_exists(options)
       if File.exist?(File.expand_path(File.join @location, @filename))
-        status['config_exists'] = true
+        @status['config_exists'] = true
       else
         if options[:create_file] == true
           full_path = File.expand_path(File.join @location, @filename)
           File.new(full_path, 'w').close
           if File.exist? full_path
-            status['config_exists'] = true
+            @status['config_exists'] = true
+            @status['errors'] = INFO_FILE_CREATED
           end
         else
-          status['config_exists'] = false
+          @status['config_exists'] = false
+          @status['errors'] = ERR_FILE_NOT_EXIST
         end
       end
     end
