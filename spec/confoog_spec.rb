@@ -62,4 +62,23 @@ describe Confoog do
       end
     end
   end
+
+  context 'after created', fakefs: true do
+
+    before(:each) do
+      # create fake dir and files
+      FileUtils.mkdir_p("/home/tests")
+      Dir.chdir("/home/tests") do
+        File.new(".i_do_exist", "w").close
+      end
+    end
+
+    it "should not allow us to change the filename or location" do
+      settings=subject.new(location: '/home/tests', filename: '.i_do_exist')
+      settings.config_location = '/home/moretests'
+      expect(settings.config_location).to eq '/home/tests'
+      settings.config_filename = '.newfile'
+      expect(settings.config_filename).to eq '.i_do_exist'
+    end
+  end
 end

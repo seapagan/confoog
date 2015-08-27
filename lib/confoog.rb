@@ -5,7 +5,7 @@ module Confoog
   DEFAULT_CONFIG = '.confoog'
 
   class Settings
-    attr_accessor :config_filename, :config_location, :status
+    attr_reader :config_filename, :config_location, :status
 
     def initialize(options = {})
       # default options to avoid ambiguity
@@ -19,6 +19,18 @@ module Confoog
 
       # make sure the file exists or can be created...
       check_exists(options)
+    end
+
+    def config_location=(location)
+      # dummy method currently to stop changing location by caller once created,
+      # but not raise error.
+      # In future will return an error flag in the ':status' variable.
+    end
+
+    def config_filename=(filename)
+      # dummy method currently to stop changing filename by caller once creeated,
+      # but not raise error.
+      # In future will return an error flag in the ':status' variable.
     end
 
     private
