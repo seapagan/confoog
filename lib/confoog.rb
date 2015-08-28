@@ -13,6 +13,8 @@ module Confoog
   #Info messages to be returned
   INFO_FILE_CREATED = 256
 
+  OUTPUT_SEVERITY = {ERR: 'Error', WARN: 'Warning', INFO: 'Information'}
+
   class Settings
     attr_accessor :prefix
     attr_reader :filename, :location, :status
@@ -40,7 +42,7 @@ module Confoog
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
       @status['errors']= ERR_CANT_CHANGE
-      console_output("Cannot change file location after creation")
+      console_output("Cannot change file location after creation", OUTPUT_SEVERITY[:WARN])
     end
 
     def filename=(filename)
@@ -48,14 +50,14 @@ module Confoog
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
       @status['errors']= ERR_CANT_CHANGE
-      console_output("Cannot change filename after creation")
+      console_output("Cannot change filename after creation", OUTPUT_SEVERITY[:WARN])
     end
 
 
     private
 
-    def console_output(message)
-      $stderr.puts "#{@prefix} #{message}"
+    def console_output(message, severity)
+      $stderr.puts "#{@prefix} #{severity} - #{message}"
     end
 
     def check_exists(options)
@@ -71,12 +73,12 @@ module Confoog
           rescue => e
             @status['config_exists'] = false
             @status['errors'] = ERR_CANT_CREATE_FILE
-            console_output("Cannot create the specified Configuration file!")
+            console_output("Cannot create the specified Configuration file!", OUTPUT_SEVERITY[:ERR])
           end
         else
           @status['config_exists'] = false
           @status['errors'] = ERR_FILE_NOT_EXIST
-          console_output("The specified Configuration file does not exist.")
+          console_output("The specified Configuration file does not exist.", OUTPUT_SEVERITY[:ERR])
         end
       end
     end
