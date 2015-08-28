@@ -4,6 +4,17 @@ describe Confoog do
 
   subject {Confoog::Settings}
 
+  before(:all) do
+    # create an internal STDERR so we can still test this but it will not
+    # clutter up the output
+    $original_stderr = $stderr
+    $stderr = StringIO.new
+  end
+
+  after(:all) do
+    $stderr = $original_stderr
+  end
+
   it 'has a version number' do
     expect(Confoog::VERSION).not_to be nil
   end
@@ -46,10 +57,17 @@ describe Confoog do
         expect(settings.location).to eq '/put/it/here'
         expect(settings.status['errors']).to eq Confoog::ERR_NO_ERROR
       end
+      it 'should allow us to sepecify the default prefix for console messages' do
+        settings=subject.new(prefix: 'MyProg :')
+        expect(settings.prefix).to eq 'MyProg :'
+      end
+      it 'should use this prefix for console messages and output to STDERR' do
+        expect($stderr).to receive(:puts).with(/^MyProg :/)
+        settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :')
+      end
     end
 
     context 'it should check the existence of the specified configuration file' do
-
       it 'should set status[config_exists] to false if this does not exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_dont_exist')
         expect(settings.status['config_exists']).to be false

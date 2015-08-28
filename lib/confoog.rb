@@ -14,6 +14,7 @@ module Confoog
   INFO_FILE_CREATED = 256
 
   class Settings
+    attr_accessor :prefix
     attr_reader :filename, :location, :status
 
     def initialize(options = {})
@@ -25,6 +26,7 @@ module Confoog
       @status = {}
       @location = options[:location] || '~/'
       @filename = options[:filename] || DEFAULT_CONFIG
+      @prefix = options[:prefix] || 'Configuration :'
 
       @status['errors'] = ERR_NO_ERROR
 
@@ -38,6 +40,7 @@ module Confoog
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
       @status['errors']= ERR_CANT_CHANGE
+      console_output("Cannot change file location after creation")
     end
 
     def filename=(filename)
@@ -45,9 +48,15 @@ module Confoog
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
       @status['errors']= ERR_CANT_CHANGE
+      console_output("Cannot change filename after creation")
     end
 
+
     private
+
+    def console_output(message)
+      $stderr.puts "#{@prefix} #{message}"
+    end
 
     def check_exists(options)
       if File.exist?(File.expand_path(File.join @location, @filename))
@@ -62,10 +71,12 @@ module Confoog
           rescue => e
             @status['config_exists'] = false
             @status['errors'] = ERR_CANT_CREATE_FILE
+            console_output("Cannot create the specified Configuration file!")
           end
         else
           @status['config_exists'] = false
           @status['errors'] = ERR_FILE_NOT_EXIST
+          console_output("The specified Configuration file does not exist.")
         end
       end
     end
