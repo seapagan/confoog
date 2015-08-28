@@ -51,7 +51,7 @@ create_file: false
 ## To Do
 
 Thoughts in no particular order
-- add a status / error variable to the class for use by callers and a set of standard error constants.
+-
 
 ## Development
 
