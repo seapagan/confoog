@@ -36,16 +36,24 @@ Confoog will take several parameters on creation, to specify the default config 
 ```ruby
 settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
 ```
-There are other optional flags or variables that can be passed on creation. If not specified these will default to false:
+There are other optional flags or variables that can be passed on creation:
 ```ruby
 # Should a missing configuration file be created or not
 create_file: true | false
+
+# Specify an optional prefix before any error messages
+prefix: 'My Application'
+
+# Should we avoid outputing errors to the console? (ie in a GUI app)
+quiet: true | false
 ```
 If these are not specified, Confoog will use the following defaults :
 ```ruby
 location: '~/'
 filename: '.confoog'
 create_file: false
+prefix: 'Configuration'
+quiet: false
 ```
 
 ## To Do
