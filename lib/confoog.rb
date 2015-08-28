@@ -16,7 +16,7 @@ module Confoog
   OUTPUT_SEVERITY = {ERR: 'Error', WARN: 'Warning', INFO: 'Information'}
 
   class Settings
-    attr_accessor :prefix
+    attr_accessor :prefix, :quiet
     attr_reader :filename, :location, :status
 
     def initialize(options = {})
@@ -28,7 +28,8 @@ module Confoog
       @status = {}
       @location = options[:location] || '~/'
       @filename = options[:filename] || DEFAULT_CONFIG
-      @prefix = options[:prefix] || 'Configuration :'
+      @prefix = options[:prefix] || 'Configuration'
+      @quiet = options[:quiet] || false
 
       @status['errors'] = ERR_NO_ERROR
 
@@ -57,7 +58,7 @@ module Confoog
     private
 
     def console_output(message, severity)
-      $stderr.puts "#{@prefix} #{severity} - #{message}"
+      $stderr.puts "#{@prefix} : #{severity} - #{message}" unless @quiet == true
     end
 
     def check_exists(options)

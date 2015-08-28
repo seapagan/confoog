@@ -65,6 +65,16 @@ describe Confoog do
         expect($stderr).to receive(:puts).with(/^MyProg :/)
         settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :')
       end
+      it 'it should not output any messages if the quiet: option is passed.' do
+        expect($stderr).not_to receive(:puts)
+        settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
+      end
+      it 'should allow us to change this at any time though' do
+        settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
+        settings.quiet = false
+        expect($stderr).to receive(:puts) # not fussed what text, just that it exists
+        settings.location = 'this will fail'
+      end
     end
 
     context 'it should check the existence of the specified configuration file' do
