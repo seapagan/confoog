@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Seapagan"]
   spec.email         = ["seapagan@gmail.com"]
 
-  spec.summary       = %q{A simple but complete Gem to add configuration files to your Ruby script / Gem}
-  spec.description   = %q{WORK IN PROGRESS, No where near ready for use. This will add a class that takes care of all your configuration needs for Ruby scripts and Gems}
+  spec.summary       = %q{A simple Gem to add YAML configuration files to your Ruby script / Gem}
+  spec.description   = %q{A WORK IN PROGRESS, Nowhere near ready for use, and if fact currently will neither load nor save the configuration to file!}
   spec.homepage      = "https://github.com/seapagan/confoog"
   spec.license       = "MIT"
 

@@ -5,9 +5,11 @@
 [![Code Climate](https://codeclimate.com/github/seapagan/confoog/badges/gpa.svg)](https://codeclimate.com/github/seapagan/confoog)
 [![Inline docs](http://inch-ci.org/github/seapagan/confoog.svg?branch=master)](http://inch-ci.org/github/seapagan/confoog)
 
-A simple but complete Gem to add configuration files to your Ruby script / Gem
+A simple Gem to add YAML configuration files to your Ruby script / Gem.
 
-WORK IN PROGRESS, Nowhere near ready for use, and if fact currently does almost nothing! This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
+*__ A WORK IN PROGRESS, Nowhere near ready for use, and if fact currently will neither load nor save the configuration to file!__*
+
+This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
 
 ## Installation
 
@@ -31,6 +33,18 @@ Or install it yourself as:
 require 'confoog'
 
 settings = Confoog::Settings.new
+settings[:var] = value
+settings[:array] = [1, 2, 3, 4]
+settings[42] = "Meaning of life"
+settings[:urls] = ["https://www.mywebsite.com", "https://www.anothersite.com/a/page.html"]
+
+settings[:dont_exist]
+# => nil
+
+a_variable = 50
+settings[a_variable] = {:one => "for the money", :two => "for the show", :three => "to get ready"}
+settings[50]
+# => {:one=>"for the money", :two=>"for the show", :three=>"to get ready"}
 ```
 Confoog will take several parameters on creation, to specify the default config file and location. For example :
 ```ruby
@@ -56,9 +70,23 @@ prefix: 'Configuration'
 quiet: false
 ```
 
+Confoog will set the following error constants which will be returned in the `.status['errors']` variable as needed :
+```ruby
+ERR_NO_ERROR = 0 # no error condition, command was succesfull
+ERR_FILE_NOT_EXIST = 1 # specified configuration file does not exist
+ERR_CANT_CHANGE = 2 # directory and file can only be specified through `.new()`
+ERR_CANT_CREATE_FILE = 4 # cannot create the requested configuration file
+
+INFO_FILE_CREATED = 256 # Information - specified file was created
+```
+These are generally to do with existence and creation of configuration files.
+
 ## To Do
 
 Thoughts in no particular order.
+
+- Restrict configuration variables to a specified subset, or to only those that already exist in the YAML file.
+- A better way of dealing with multi-level variables - i.e. nested arrays, hashes etc.
 
 ## Development
 
@@ -87,8 +115,7 @@ Constraint][pvc] with two digits of precision. For example:
 
     spec.add_dependency 'confoog', '~> 1.0'
 
-Of course, currently we have not even reached version 1, so expect any and all
-of the API and interface to change!
+Of course, currently we have not even reached version 1, so leave off the version requirement completely. Expect any and all of the API and interface to change!
 
 [semver]: http://semver.org/
 [pvc]: http://guides.rubygems.org/patterns/#pessimistic-version-constraint
