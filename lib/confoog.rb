@@ -31,6 +31,8 @@ module Confoog
       @prefix = options[:prefix] || 'Configuration'
       @quiet = options[:quiet] || false
 
+      @config = {}
+
       @status['errors'] = ERR_NO_ERROR
 
       # make sure the file exists or can be created...
@@ -52,6 +54,14 @@ module Confoog
       #  - Return an error flag in the ':status' variable.
       @status['errors']= ERR_CANT_CHANGE
       console_output("Cannot change filename after creation", OUTPUT_SEVERITY[:WARN])
+    end
+
+    def [](key)
+      @config[key]
+    end
+
+    def []=(key, value)
+      @config[key] = value
     end
 
     def config_path
