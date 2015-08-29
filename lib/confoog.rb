@@ -54,6 +54,9 @@ module Confoog
       console_output("Cannot change filename after creation", OUTPUT_SEVERITY[:WARN])
     end
 
+    def config_path
+      File.expand_path(File.join(@location, @filename))
+    end
 
     private
 
@@ -62,13 +65,12 @@ module Confoog
     end
 
     def check_exists(options)
-      if File.exist?(File.expand_path(File.join @location, @filename))
+      if File.exist?(config_path)
         @status['config_exists'] = true
       else
         if options[:create_file] == true
-          full_path = File.expand_path(File.join @location, @filename)
           begin
-            file = File.new(full_path, 'w').close
+            file = File.new(config_path, 'w').close
             @status['config_exists'] = true
             @status['errors'] = INFO_FILE_CREATED
           rescue => e
