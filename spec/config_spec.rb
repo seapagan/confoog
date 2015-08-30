@@ -4,6 +4,17 @@ describe Confoog::Settings do
 
   subject {Confoog::Settings.new}
 
+  before(:all) do
+    # create an internal STDERR so we can still test this but it will not
+    # clutter up the output
+    $original_stderr = $stderr
+    $stderr = StringIO.new
+  end
+
+  after(:all) do
+    $stderr = $original_stderr
+  end
+
   it "should allow the setting of arbitrary value pairs of any type" do
     subject[:first] = "testing a string"
     expect(subject[:first]).to eq "testing a string"
