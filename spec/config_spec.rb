@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Confoog::Settings do
 
-subject {Confoog::Settings.new}
+  subject {Confoog::Settings.new}
 
   it "should allow the setting of arbitrary value pairs of any type" do
     subject[:first] = "testing a string"

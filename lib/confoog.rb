@@ -1,4 +1,5 @@
 require 'confoog/version'
+require 'yaml'
 
 module Confoog
 
@@ -9,6 +10,8 @@ module Confoog
   ERR_FILE_NOT_EXIST = 1
   ERR_CANT_CHANGE = 2
   ERR_CANT_CREATE_FILE = 4
+  ERR_NOT_WRITING_EMPTY_FILE = 8
+  ERR_CANT_SAVE_CONFIGURATION = 16
 
   #Info messages to be returned
   INFO_FILE_CREATED = 256
@@ -38,6 +41,21 @@ module Confoog
       # make sure the file exists or can be created...
       check_exists(options)
 
+    end
+
+    def save
+      if @config.count > 0 then
+        begin
+          file = File.open(config_path, 'w')
+          file.write(@config.to_yaml)
+        rescue => e
+          console_output("Cannot save configuration data to #{config_path}", OUTPUT_SEVERITY[:ERR])
+          puts e.inspect
+        end
+      else
+        console_output("Not saving empty configuration data to #{config_path}", OUTPUT_SEVERITY[:WARN])
+        @status['errors'] = ERR_NOT_WRITING_EMPTY_FILE
+      end
     end
 
     def location=(location)
