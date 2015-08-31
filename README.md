@@ -7,7 +7,7 @@
 
 A simple Gem to add YAML configuration files to your Ruby script / Gem.
 
-__*A WORK IN PROGRESS, Nowhere near ready for use, and if fact currently will neither load nor save the configuration to file!*__
+__*A WORK IN PROGRESS, Not really ready for production use. The API may be subject to changes before hitting version 1.0.0
 
 This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
 
@@ -45,6 +45,10 @@ a_variable = 50
 settings[a_variable] = {:one => "for the money", :two => "for the show", :three => "to get ready"}
 settings[50]
 # => {:one=>"for the money", :two=>"for the show", :three=>"to get ready"}
+
+settings.save # save all current parameters to the YAML file
+
+settings.load # load the settings from YAML file.
 ```
 Confoog will take several parameters on creation, to specify the default config file and location. For example :
 ```ruby
@@ -76,8 +80,12 @@ ERR_NO_ERROR = 0 # no error condition, command was succesfull
 ERR_FILE_NOT_EXIST = 1 # specified configuration file does not exist
 ERR_CANT_CHANGE = 2 # directory and file can only be specified through `.new()`
 ERR_CANT_CREATE_FILE = 4 # cannot create the requested configuration file
+ERR_NOT_WRITING_EMPTY_FILE = 8 # not attempting to save an empty configuration
+ERR_CANT_SAVE_CONFIGURATION = 16 # Failed to save the configuration file
+ERR_NOT_LOADING_EMPTY_FILE = 32 # not atempting to load an empty config file
 
 INFO_FILE_CREATED = 256 # Information - specified file was created
+INFO_FILE_LOADED = 512 # Information - Config file was loaded successfully
 ```
 These are generally to do with existence and creation of configuration files.
 
@@ -87,6 +95,7 @@ Thoughts in no particular order.
 
 - Restrict configuration variables to a specified subset, or to only those that already exist in the YAML file.
 - A better way of dealing with multi-level variables - i.e. nested arrays, hashes etc.
+- option to save config file after any config variables are changed, not just explicitly with `Confoog::Settings.save`
 
 ## Development
 
