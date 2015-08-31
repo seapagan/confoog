@@ -12,9 +12,11 @@ module Confoog
   ERR_CANT_CREATE_FILE = 4
   ERR_NOT_WRITING_EMPTY_FILE = 8
   ERR_CANT_SAVE_CONFIGURATION = 16
+  ERR_NOT_LOADING_EMPTY_FILE = 32
 
   #Info messages to be returned
   INFO_FILE_CREATED = 256
+  INFO_FILE_LOADED = 512
 
   OUTPUT_SEVERITY = {ERR: 'Error', WARN: 'Warning', INFO: 'Information'}
 
@@ -50,11 +52,24 @@ module Confoog
           file.write(@config.to_yaml)
         rescue => e
           console_output("Cannot save configuration data to #{config_path}", OUTPUT_SEVERITY[:ERR])
-          puts e.inspect
         end
       else
         console_output("Not saving empty configuration data to #{config_path}", OUTPUT_SEVERITY[:WARN])
         @status['errors'] = ERR_NOT_WRITING_EMPTY_FILE
+      end
+    end
+
+    def load
+      begin
+        @config = YAML.load_file(config_path)
+        if @config == false
+          console_output("Configuration file #{config_path} is empty!", OUTPUT_SEVERITY[:WARN])
+          @status['errors']= ERR_NOT_LOADING_EMPTY_FILE
+        else
+          @status['errors']= INFO_FILE_LOADED
+        end
+      rescue => e
+        console_output("Cannot load configuration data from #{config_path}", OUTPUT_SEVERITY[:ERR])
       end
     end
 
