@@ -2,10 +2,9 @@ require 'confoog/version'
 require 'yaml'
 
 module Confoog
-
   DEFAULT_CONFIG = '.confoog'
 
-  #Error messages to be returned
+  # Error messages to be returned
   ERR_NO_ERROR = 0
   ERR_FILE_NOT_EXIST = 1
   ERR_CANT_CHANGE = 2
@@ -14,11 +13,11 @@ module Confoog
   ERR_CANT_SAVE_CONFIGURATION = 16
   ERR_NOT_LOADING_EMPTY_FILE = 32
 
-  #Info messages to be returned
+  # Info messages to be returned
   INFO_FILE_CREATED = 256
   INFO_FILE_LOADED = 512
 
-  OUTPUT_SEVERITY = {ERR: 'Error', WARN: 'Warning', INFO: 'Information'}
+  OUTPUT_SEVERITY = { ERR: 'Error', WARN: 'Warning', INFO: 'Information' }
 
   class Settings
     attr_accessor :prefix, :quiet
@@ -42,19 +41,20 @@ module Confoog
 
       # make sure the file exists or can be created...
       check_exists(options)
-
     end
 
     def save
-      if @config.count > 0 then
+      if @config.count > 0
         begin
           file = File.open(config_path, 'w')
           file.write(@config.to_yaml)
-        rescue => e
-          console_output("Cannot save configuration data to #{config_path}", OUTPUT_SEVERITY[:ERR])
+        rescue
+          console_output("Cannot save configuration data to #{config_path}",
+                         OUTPUT_SEVERITY[:ERR])
         end
       else
-        console_output("Not saving empty configuration data to #{config_path}", OUTPUT_SEVERITY[:WARN])
+        console_output("Not saving empty configuration data to #{config_path}",
+                       OUTPUT_SEVERITY[:WARN])
         @status['errors'] = ERR_NOT_WRITING_EMPTY_FILE
       end
     end
@@ -63,30 +63,34 @@ module Confoog
       begin
         @config = YAML.load_file(config_path)
         if @config == false
-          console_output("Configuration file #{config_path} is empty!", OUTPUT_SEVERITY[:WARN])
-          @status['errors']= ERR_NOT_LOADING_EMPTY_FILE
+          console_output("Configuration file #{config_path} is empty!",
+                         OUTPUT_SEVERITY[:WARN])
+          @status['errors'] = ERR_NOT_LOADING_EMPTY_FILE
         else
-          @status['errors']= INFO_FILE_LOADED
+          @status['errors'] = INFO_FILE_LOADED
         end
-      rescue => e
-        console_output("Cannot load configuration data from #{config_path}", OUTPUT_SEVERITY[:ERR])
+      rescue
+        console_output("Cannot load configuration data from #{config_path}",
+                       OUTPUT_SEVERITY[:ERR])
       end
     end
 
-    def location=(location)
+    def location=(*)
       # dummy method currently to stop changing location by caller once created,
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
-      @status['errors']= ERR_CANT_CHANGE
-      console_output("Cannot change file location after creation", OUTPUT_SEVERITY[:WARN])
+      @status['errors'] = ERR_CANT_CHANGE
+      console_output('Cannot change file location after creation',
+                     OUTPUT_SEVERITY[:WARN])
     end
 
-    def filename=(filename)
+    def filename=(*)
       # dummy method currently to stop changing filename by caller once created,
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
-      @status['errors']= ERR_CANT_CHANGE
-      console_output("Cannot change filename after creation", OUTPUT_SEVERITY[:WARN])
+      @status['errors'] = ERR_CANT_CHANGE
+      console_output('Cannot change filename after creation',
+                     OUTPUT_SEVERITY[:WARN])
     end
 
     def [](key)
@@ -113,18 +117,20 @@ module Confoog
       else
         if options[:create_file] == true
           begin
-            file = File.new(config_path, 'w').close
+            File.new(config_path, 'w').close
             @status['config_exists'] = true
             @status['errors'] = INFO_FILE_CREATED
-          rescue => e
+          rescue
             @status['config_exists'] = false
             @status['errors'] = ERR_CANT_CREATE_FILE
-            console_output("Cannot create the specified Configuration file!", OUTPUT_SEVERITY[:ERR])
+            console_output('Cannot create the specified Configuration file!',
+                           OUTPUT_SEVERITY[:ERR])
           end
         else
           @status['config_exists'] = false
           @status['errors'] = ERR_FILE_NOT_EXIST
-          console_output("The specified Configuration file does not exist.", OUTPUT_SEVERITY[:ERR])
+          console_output('The specified Configuration file does not exist.',
+                         OUTPUT_SEVERITY[:ERR])
         end
       end
     end
