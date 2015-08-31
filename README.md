@@ -7,7 +7,7 @@
 
 A simple Gem to add YAML configuration files to your Ruby script / Gem.
 
-__*A WORK IN PROGRESS, Not really ready for production use. The API may be subject to changes before hitting version 1.0.0
+__*A WORK IN PROGRESS, Not really ready for production use. The API may be subject to changes before hitting version 1.0.0*__
 
 This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
 
