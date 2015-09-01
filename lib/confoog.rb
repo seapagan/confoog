@@ -45,13 +45,7 @@ module Confoog
 
     def save
       if @config.count > 0
-        begin
-          file = File.open(config_path, 'w')
-          file.write(@config.to_yaml)
-        rescue
-          console_output("Cannot save configuration data to #{config_path}",
-                         OUTPUT_SEVERITY[:ERR])
-        end
+        save_to_yaml
       else
         console_output("Not saving empty configuration data to #{config_path}",
                        OUTPUT_SEVERITY[:WARN])
@@ -107,6 +101,14 @@ module Confoog
 
     def console_output(message, severity)
       $stderr.puts "#{@prefix} : #{severity} - #{message}" unless @quiet == true
+    end
+
+    def save_to_yaml
+      file = File.open(config_path, 'w')
+      file.write(@config.to_yaml)
+    rescue
+      console_output("Cannot save configuration data to #{config_path}",
+                     OUTPUT_SEVERITY[:ERR])
     end
 
     def check_exists(options)
