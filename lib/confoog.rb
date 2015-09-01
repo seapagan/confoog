@@ -60,19 +60,17 @@ module Confoog
     end
 
     def load
-      begin
-        @config = YAML.load_file(config_path)
-        if @config == false
-          console_output("Configuration file #{config_path} is empty!",
-                         OUTPUT_SEVERITY[:WARN])
-          @status['errors'] = ERR_NOT_LOADING_EMPTY_FILE
-        else
-          @status['errors'] = INFO_FILE_LOADED
-        end
-      rescue
-        console_output("Cannot load configuration data from #{config_path}",
-                       OUTPUT_SEVERITY[:ERR])
+      @config = YAML.load_file(config_path)
+      if @config == false
+        console_output("Configuration file #{config_path} is empty!",
+                       OUTPUT_SEVERITY[:WARN])
+        @status['errors'] = ERR_NOT_LOADING_EMPTY_FILE
+      else
+        @status['errors'] = INFO_FILE_LOADED
       end
+    rescue
+      console_output("Cannot load configuration data from #{config_path}",
+                     OUTPUT_SEVERITY[:ERR])
     end
 
     def location=(*)
