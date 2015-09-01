@@ -115,7 +115,8 @@ module Confoog
     private
 
     def console_output(message, severity)
-      $stderr.puts "#{@options[:prefix]} : #{severity} - #{message}" unless @options[:quiet] == true
+      return unless @options[:quiet] == false
+      $stderr.puts "#{@options[:prefix]} : #{severity} - #{message}"
     end
 
     def save_to_yaml
