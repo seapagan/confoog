@@ -57,11 +57,7 @@ describe Confoog do
         expect(settings.location).to eq '/put/it/here'
         expect(settings.status['errors']).to eq Confoog::ERR_NO_ERROR
       end
-      it 'should allow us to sepecify the default prefix for console messages' do
-        settings=subject.new(prefix: 'MyProg :')
-        expect(settings.prefix).to eq 'MyProg :'
-      end
-      it 'should use this prefix for console messages and output to STDERR' do
+      it 'should allow us to specify the default prefix for console messages and output this to STDERR' do
         expect($stderr).to receive(:puts).with(/^MyProg :/)
         settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :')
       end

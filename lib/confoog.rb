@@ -30,7 +30,6 @@ module Confoog
   }
 
   class Settings
-    attr_accessor :prefix
     attr_reader :filename, :location, :status
 
     def initialize(options = {})
@@ -42,7 +41,6 @@ module Confoog
       @status = {}
       @location = @options[:location] || '~/'
       @filename = @options[:filename] || DEFAULT_CONFIG
-      @prefix = @options[:prefix]
 
       @config = {}
 
@@ -117,7 +115,7 @@ module Confoog
     private
 
     def console_output(message, severity)
-      $stderr.puts "#{@prefix} : #{severity} - #{message}" unless @options[:quiet] == true
+      $stderr.puts "#{@options[:prefix]} : #{severity} - #{message}" unless @options[:quiet] == true
     end
 
     def save_to_yaml
