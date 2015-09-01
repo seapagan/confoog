@@ -17,23 +17,32 @@ module Confoog
   INFO_FILE_CREATED = 256
   INFO_FILE_LOADED = 512
 
-  OUTPUT_SEVERITY = { ERR: 'Error', WARN: 'Warning', INFO: 'Information' }
+  OUTPUT_SEVERITY = {
+    ERR: 'Error',
+    WARN: 'Warning',
+    INFO: 'Information'
+  }
+
+  DEFAULT_OPTIONS = {
+    create_file: false,
+    quiet: false,
+    prefix: 'Configuration'
+  }
 
   class Settings
-    attr_accessor :prefix, :quiet
+    attr_accessor :prefix
     attr_reader :filename, :location, :status
 
     def initialize(options = {})
-      # default options to avoid ambiguity
-      defaults = { create_file: false }
-      defaults.merge!(options)
+      # merge default options to avoid ambiguity
+      @options = DEFAULT_OPTIONS.merge(options)
       # set all other unset options to return false instead of Nul.
-      options.default = false
+      @options.default = false
+
       @status = {}
-      @location = options[:location] || '~/'
-      @filename = options[:filename] || DEFAULT_CONFIG
-      @prefix = options[:prefix] || 'Configuration'
-      @quiet = options[:quiet] || false
+      @location = @options[:location] || '~/'
+      @filename = @options[:filename] || DEFAULT_CONFIG
+      @prefix = @options[:prefix]
 
       @config = {}
 
@@ -41,6 +50,14 @@ module Confoog
 
       # make sure the file exists or can be created...
       check_exists(options)
+    end
+
+    def quiet
+      @options[:quiet]
+    end
+
+    def quiet=(quiet)
+      @options[:quiet] = quiet
     end
 
     def save
@@ -100,7 +117,7 @@ module Confoog
     private
 
     def console_output(message, severity)
-      $stderr.puts "#{@prefix} : #{severity} - #{message}" unless @quiet == true
+      $stderr.puts "#{@prefix} : #{severity} - #{message}" unless @options[:quiet] == true
     end
 
     def save_to_yaml
