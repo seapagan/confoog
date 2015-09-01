@@ -111,21 +111,23 @@ module Confoog
                      OUTPUT_SEVERITY[:ERR])
     end
 
+    def create_new_file
+      File.new(config_path, 'w').close
+      @status['config_exists'] = true
+      @status['errors'] = INFO_FILE_CREATED
+    rescue
+      @status['config_exists'] = false
+      @status['errors'] = ERR_CANT_CREATE_FILE
+      console_output('Cannot create the specified Configuration file!',
+                     OUTPUT_SEVERITY[:ERR])
+    end
+
     def check_exists(options)
       if File.exist?(config_path)
         @status['config_exists'] = true
       else
         if options[:create_file] == true
-          begin
-            File.new(config_path, 'w').close
-            @status['config_exists'] = true
-            @status['errors'] = INFO_FILE_CREATED
-          rescue
-            @status['config_exists'] = false
-            @status['errors'] = ERR_CANT_CREATE_FILE
-            console_output('Cannot create the specified Configuration file!',
-                           OUTPUT_SEVERITY[:ERR])
-          end
+          create_new_file
         else
           @status['config_exists'] = false
           @status['errors'] = ERR_FILE_NOT_EXIST
