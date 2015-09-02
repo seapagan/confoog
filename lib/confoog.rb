@@ -1,6 +1,8 @@
 require 'confoog/version'
 require 'yaml'
 
+# Overall module.
+# Contains Class Confoog::Settings
 module Confoog
   DEFAULT_CONFIG = '.confoog'
 
@@ -31,6 +33,12 @@ module Confoog
     filename: DEFAULT_CONFIG
   }
 
+  # Class : Settings.
+  # Provide an encapsulated class to access a YAML configuration file.
+  # Readers :
+  # .filename = read the config filename for this instance
+  # .location = read the config directory for this instance
+  # .status = Hash containing assorted status variables, read only.
   class Settings
     attr_reader :filename, :location, :status
 
