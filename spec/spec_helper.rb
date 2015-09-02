@@ -7,7 +7,7 @@ require 'confoog'
 require 'fakefs/spec_helpers'
 
 def show_file(filename)
-  contents = File.open(filename, "r"){ |file| file.read }
+  contents = File.open(filename, 'r') { |file| file.read }
   puts contents
 end
 
