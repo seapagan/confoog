@@ -1,3 +1,4 @@
+# rubocop:disable LineLength
 require 'spec_helper'
 
 describe Confoog do
@@ -56,11 +57,11 @@ describe Confoog do
       end
       it 'should allow us to specify the default prefix for console messages and output this to STDERR' do
         expect($stderr).to receive(:puts).with(/^MyProg :/)
-        settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :')
+        subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :')
       end
       it 'it should not output any messages if the quiet: option is passed.' do
         expect($stderr).not_to receive(:puts)
-        settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
+        subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
       end
       it 'should allow us to change this at any time though' do
         settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)

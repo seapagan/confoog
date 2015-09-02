@@ -1,3 +1,4 @@
+# rubocop:disable LineLength
 require 'spec_helper'
 
 describe Confoog::Settings, fakefs: true do
