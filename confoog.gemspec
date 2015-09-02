@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Seapagan']
   spec.email         = ['seapagan@gmail.com']
 
-  spec.summary       = 'A simple Gem to add YAML configuration files to your Ruby script / Gem'
-  spec.description   = 'A WORK IN PROGRESS, Nowhere near ready for use, and if fact currently will neither load nor save the configuration to file!'
+  spec.summary       = 'This will add a class that takes care of all your configuration needs for Ruby scripts and Gems. Simple and basic'
+  spec.description   = 'A simple Gem to add YAML configuration files to your Ruby script or Gem'
   spec.homepage      = 'https://github.com/seapagan/confoog'
   spec.license       = 'MIT'
 
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec', '~> 3.3'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'fakefs'
   spec.add_development_dependency 'coveralls'
