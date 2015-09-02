@@ -26,7 +26,9 @@ module Confoog
   DEFAULT_OPTIONS = {
     create_file: false,
     quiet: false,
-    prefix: 'Configuration'
+    prefix: 'Configuration',
+    location: '~/',
+    filename: DEFAULT_CONFIG
   }
 
   class Settings
@@ -39,8 +41,8 @@ module Confoog
       @options.default = false
 
       @status = {}
-      @location = @options[:location] || '~/'
-      @filename = @options[:filename] || DEFAULT_CONFIG
+      @location = @options[:location]
+      @filename = @options[:filename]
 
       @config = {}
 
