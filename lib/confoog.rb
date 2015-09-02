@@ -45,7 +45,7 @@ module Confoog
       @config = {}
 
       # clear the error condition as default.
-      status_set('errors' => ERR_NO_ERROR)
+      status_set(errors: ERR_NO_ERROR)
       # make sure the file exists or can be created...
       check_exists(options)
     end
@@ -64,17 +64,17 @@ module Confoog
       else
         console_output("Not saving empty configuration data to #{config_path}",
                        OUTPUT_SEVERITY[:WARN])
-        status_set('errors' => ERR_NOT_WRITING_EMPTY_FILE)
+        status_set(errors: ERR_NOT_WRITING_EMPTY_FILE)
       end
     end
 
     def load
       @config = YAML.load_file(config_path)
-      status_set('errors' => INFO_FILE_LOADED)
+      status_set(errors: INFO_FILE_LOADED)
       if @config == false
         console_output("Configuration file #{config_path} is empty!",
                        OUTPUT_SEVERITY[:WARN])
-        status_set('errors' => ERR_NOT_LOADING_EMPTY_FILE)
+        status_set(errors: ERR_NOT_LOADING_EMPTY_FILE)
       end
     rescue
       console_output("Cannot load configuration data from #{config_path}",
@@ -85,7 +85,7 @@ module Confoog
       # dummy method currently to stop changing location by caller once created,
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
-      status_set('errors' => ERR_CANT_CHANGE)
+      status_set(errors: ERR_CANT_CHANGE)
       console_output('Cannot change file location after creation',
                      OUTPUT_SEVERITY[:WARN])
     end
@@ -94,7 +94,7 @@ module Confoog
       # dummy method currently to stop changing filename by caller once created,
       # but not raise error.
       #  - Return an error flag in the ':status' variable.
-      status_set('errors' => ERR_CANT_CHANGE)
+      status_set(errors: ERR_CANT_CHANGE)
       console_output('Cannot change filename after creation',
                      OUTPUT_SEVERITY[:WARN])
     end
@@ -128,9 +128,9 @@ module Confoog
 
     def create_new_file
       File.new(config_path, 'w').close
-      status_set('config_exists' => true, 'errors' => INFO_FILE_CREATED)
+      status_set('config_exists' => true, errors: INFO_FILE_CREATED)
     rescue
-      status_set('config_exists' => false, 'errors' => ERR_CANT_CREATE_FILE)
+      status_set('config_exists' => false, errors: ERR_CANT_CREATE_FILE)
       console_output('Cannot create the specified Configuration file!',
                      OUTPUT_SEVERITY[:ERR])
     end
@@ -149,7 +149,7 @@ module Confoog
       if options[:create_file] == true
         create_new_file
       else
-        status_set('config_exists' => false, 'errors' => ERR_FILE_NOT_EXIST)
+        status_set('config_exists' => false, errors: ERR_FILE_NOT_EXIST)
         console_output('The specified Configuration file does not exist.',
                        OUTPUT_SEVERITY[:ERR])
       end

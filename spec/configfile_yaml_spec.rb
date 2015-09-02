@@ -33,7 +33,7 @@ describe Confoog::Settings, fakefs: true do
       expect($stderr).to receive(:puts).with(/empty/)
       s.save
       expect(File.size("/home/tests/.confoog")).to be 0
-      expect(s.status['errors']).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
+      expect(s.status[:errors]).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
     end
 
     it 'should save an easy config to valid YAML' do
@@ -59,14 +59,14 @@ describe Confoog::Settings, fakefs: true do
       s = subject.new(location: "/home/tests", filename: '.i_dont_exist')
       expect($stderr).to receive(:puts).with(/Cannot load configuration data from/)
       s.load
-      expect(s.status['errors']).to eq Confoog::ERR_FILE_NOT_EXIST
+      expect(s.status[:errors]).to eq Confoog::ERR_FILE_NOT_EXIST
     end
 
     it 'should comment if the file is empty' do
       s = subject.new(location: "/home/tests", create_file: true)
       expect($stderr).to receive(:puts).with(/empty/)
       s.load
-      expect(s.status['errors']).to eq Confoog::ERR_NOT_LOADING_EMPTY_FILE
+      expect(s.status[:errors]).to eq Confoog::ERR_NOT_LOADING_EMPTY_FILE
     end
   end
 end

@@ -41,7 +41,7 @@ describe Confoog do
       let(:settings) {subject.new}
       it 'should create the class with no errors' do
         expect(settings).to be_an_instance_of subject
-        expect(settings.status['errors']).to eq Confoog::ERR_NO_ERROR
+        expect(settings.status[:errors]).to eq Confoog::ERR_NO_ERROR
       end
       it 'should set sensible defaults' do
         expect(settings.filename).to be Confoog::DEFAULT_CONFIG
@@ -55,7 +55,7 @@ describe Confoog do
         settings=subject.new(filename: '.myconfigfile', location: '/put/it/here')
         expect(settings.filename).to eq '.myconfigfile'
         expect(settings.location).to eq '/put/it/here'
-        expect(settings.status['errors']).to eq Confoog::ERR_NO_ERROR
+        expect(settings.status[:errors]).to eq Confoog::ERR_NO_ERROR
       end
       it 'should allow us to specify the default prefix for console messages and output this to STDERR' do
         expect($stderr).to receive(:puts).with(/^MyProg :/)
@@ -81,23 +81,23 @@ describe Confoog do
       it 'should set status[config_exists] to false if this does not exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_dont_exist')
         expect(settings.status['config_exists']).to be false
-        expect(settings.status['errors']).to eq Confoog::ERR_FILE_NOT_EXIST
+        expect(settings.status[:errors]).to eq Confoog::ERR_FILE_NOT_EXIST
       end
       it 'should set status[config_exists] to true if this does exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_do_exist')
         expect(settings.status['config_exists']).to be true
-        expect(settings.status['errors']).to eq Confoog::ERR_NO_ERROR
+        expect(settings.status[:errors]).to eq Confoog::ERR_NO_ERROR
       end
       it 'should create this file if create_file: true is passed and file does not exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_should_be_created', create_file: true)
         expect(settings.status['config_exists']).to be true
         expect(File).to exist('/home/tests/.i_should_be_created')
-        expect(settings.status['errors']).to eq Confoog::INFO_FILE_CREATED
+        expect(settings.status[:errors]).to eq Confoog::INFO_FILE_CREATED
       end
       it 'should return a relevant error if the file was not able to be created' do
         # directory not exist
         settings=subject.new(location: '/directory/doesnt/exist', filename: '.i_wont_be_created', create_file: true)
-        expect(settings.status['errors']).to eq Confoog::ERR_CANT_CREATE_FILE
+        expect(settings.status[:errors]).to eq Confoog::ERR_CANT_CREATE_FILE
         expect(settings.status['config_exists']).to be false
         expect(File).not_to exist('/directory/doesnt/exist/.i_wont_be_created')
         # directory not writeable
@@ -121,10 +121,10 @@ describe Confoog do
       settings=subject.new(location: '/home/tests', filename: '.i_do_exist')
       settings.location = '/home/moretests'
       expect(settings.location).to eq '/home/tests'
-      expect(settings.status['errors']).to eq Confoog::ERR_CANT_CHANGE
+      expect(settings.status[:errors]).to eq Confoog::ERR_CANT_CHANGE
       settings.filename = '.newfile'
       expect(settings.filename).to eq '.i_do_exist'
-      expect(settings.status['errors']).to eq Confoog::ERR_CANT_CHANGE
+      expect(settings.status[:errors]).to eq Confoog::ERR_CANT_CHANGE
     end
   end
 end
