@@ -131,6 +131,7 @@ module Confoog
     def save_to_yaml
       file = File.open(config_path, 'w')
       file.write(@config.to_yaml)
+      file.close
     rescue
       console_output("Cannot save configuration data to #{config_path}",
                      OUTPUT_SEVERITY[:ERR])
