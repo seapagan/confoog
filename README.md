@@ -1,4 +1,5 @@
 # Confoog
+[![Gem Version](https://badge.fury.io/rb/confoog.svg)](http://badge.fury.io/rb/confoog)
 [![Build Status](https://travis-ci.org/seapagan/confoog.svg)](https://travis-ci.org/seapagan/confoog)
 [![Dependency Status](https://gemnasium.com/seapagan/confoog.svg)](https://gemnasium.com/seapagan/confoog)
 [![Coverage Status](https://coveralls.io/repos/seapagan/confoog/badge.svg?branch=master&service=github)](https://coveralls.io/github/seapagan/confoog?branch=master)
@@ -29,6 +30,7 @@ Or install it yourself as:
 
 ## Usage
 Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recorded for each variable and accessed (for a hash) by `settings[variable][hash_key]` or array using `settings[array].each`. In other words, treat the return from `settings[var]` as the type it contains. See examples below.
+
 ```ruby
 require 'confoog'
 
@@ -59,11 +61,14 @@ settings.save # save all current parameters to the YAML file
 
 settings.load # load the settings from YAML file.
 ```
+
 Confoog will take several parameters on creation, to specify the default config file and location. For example :
 ```ruby
 settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
 ```
+
 There are other optional flags or variables that can be passed on creation:
+
 ```ruby
 # Should a missing configuration file be created or not
 create_file: true | false
@@ -75,6 +80,7 @@ prefix: 'My Application'
 quiet: true | false
 ```
 If these are not specified, Confoog will use the following defaults :
+
 ```ruby
 location: '~/'
 filename: '.confoog'
@@ -84,6 +90,7 @@ quiet: false
 ```
 
 Confoog will set the following error constants which will be returned in the `.status['errors']` variable as needed :
+
 ```ruby
 ERR_NO_ERROR = 0 # no error condition, command was succesfull
 ERR_FILE_NOT_EXIST = 1 # specified configuration file does not exist
@@ -96,6 +103,7 @@ ERR_NOT_LOADING_EMPTY_FILE = 32 # not atempting to load an empty config file
 INFO_FILE_CREATED = 256 # Information - specified file was created
 INFO_FILE_LOADED = 512 # Information - Config file was loaded successfully
 ```
+
 These are generally to do with existence and creation of configuration files.
 
 ## To Do
