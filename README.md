@@ -28,7 +28,7 @@ Or install it yourself as:
     $ gem install confoog
 
 ## Usage
-Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recoded for each variable. This will be improved in a future version.
+Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recorded for each variable and accessed (for a hash) by `settings[variable][hash_key]` or array using `settings[array].each`. In other words, treat the return from `settings[var]` as the type it contains. See examples below.
 ```ruby
 require 'confoog'
 
@@ -38,6 +38,13 @@ settings[:array] = [1, 2, 3, 4]
 settings[42] = "Meaning of life"
 settings[:urls] = ["https://www.mywebsite.com", "https://www.anothersite.com/a/page.html"]
 
+settings[:urls].each do |url|
+  puts url
+end
+# https://www.mywebsite.com
+# https://www.anothersite.com/a/page.html
+# => ["https://www.mywebsite.com", "https://www.anothersite.com/a/page.html"]
+
 settings[:dont_exist]
 # => nil
 
@@ -45,6 +52,8 @@ a_variable = 50
 settings[a_variable] = {:one => "for the money", :two => "for the show", :three => "to get ready"}
 settings[50]
 # => {:one=>"for the money", :two=>"for the show", :three=>"to get ready"}
+settings[50][:two]
+# => "for the show"
 
 settings.save # save all current parameters to the YAML file
 
