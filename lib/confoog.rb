@@ -128,9 +128,9 @@ module Confoog
 
     def create_new_file
       File.new(config_path, 'w').close
-      status_set('config_exists' => true, errors: INFO_FILE_CREATED)
+      status_set(config_exists: true, errors: INFO_FILE_CREATED)
     rescue
-      status_set('config_exists' => false, errors: ERR_CANT_CREATE_FILE)
+      status_set(config_exists: false, errors: ERR_CANT_CREATE_FILE)
       console_output('Cannot create the specified Configuration file!',
                      OUTPUT_SEVERITY[:ERR])
     end
@@ -142,14 +142,14 @@ module Confoog
     end
 
     def check_exists(options)
-      status_set('config_exists' => true)
+      status_set(config_exists: true)
       return if File.exist?(config_path)
 
       # file does not exist so we create if requested otherwise error out
       if options[:create_file] == true
         create_new_file
       else
-        status_set('config_exists' => false, errors: ERR_FILE_NOT_EXIST)
+        status_set(config_exists: false, errors: ERR_FILE_NOT_EXIST)
         console_output('The specified Configuration file does not exist.',
                        OUTPUT_SEVERITY[:ERR])
       end

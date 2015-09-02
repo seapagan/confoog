@@ -80,17 +80,17 @@ describe Confoog do
     context 'it should check the existence of the specified configuration file' do
       it 'should set status[config_exists] to false if this does not exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_dont_exist')
-        expect(settings.status['config_exists']).to be false
+        expect(settings.status[:config_exists]).to be false
         expect(settings.status[:errors]).to eq Confoog::ERR_FILE_NOT_EXIST
       end
       it 'should set status[config_exists] to true if this does exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_do_exist')
-        expect(settings.status['config_exists']).to be true
+        expect(settings.status[:config_exists]).to be true
         expect(settings.status[:errors]).to eq Confoog::ERR_NO_ERROR
       end
       it 'should create this file if create_file: true is passed and file does not exist' do
         settings=subject.new(location: '/home/tests', filename: '.i_should_be_created', create_file: true)
-        expect(settings.status['config_exists']).to be true
+        expect(settings.status[:config_exists]).to be true
         expect(File).to exist('/home/tests/.i_should_be_created')
         expect(settings.status[:errors]).to eq Confoog::INFO_FILE_CREATED
       end
@@ -98,7 +98,7 @@ describe Confoog do
         # directory not exist
         settings=subject.new(location: '/directory/doesnt/exist', filename: '.i_wont_be_created', create_file: true)
         expect(settings.status[:errors]).to eq Confoog::ERR_CANT_CREATE_FILE
-        expect(settings.status['config_exists']).to be false
+        expect(settings.status[:config_exists]).to be false
         expect(File).not_to exist('/directory/doesnt/exist/.i_wont_be_created')
         # directory not writeable
         # cant seem to get fakefs to change attributes on files so cant create
