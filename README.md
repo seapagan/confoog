@@ -28,7 +28,7 @@ Or install it yourself as:
     $ gem install confoog
 
 ## Usage
-
+Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recoded for each variable. This will be improved in a future version.
 ```ruby
 require 'confoog'
 
