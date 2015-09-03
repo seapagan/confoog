@@ -20,8 +20,11 @@ describe Confoog::Settings, fakefs: true do
     FileUtils.mkdir_p('/home/tests')
 
     Dir.chdir('/home/tests') do
+      test_hash = {}
+      test_hash['location'] = '/home/tests'
+      test_hash['recurse'] = true
       File.open('reference.yaml', 'w') do |file|
-        file.write("---\nlocation: \"/home/tests\"\nrecurse: true\n")
+        file.write(test_hash.to_yaml)
       end
     end
   end

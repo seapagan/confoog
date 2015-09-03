@@ -7,6 +7,7 @@ require 'confoog/version'
 Gem::Specification.new do |spec|
   spec.name          = 'confoog'
   spec.version       = Confoog::VERSION
+  spec.required_ruby_version = '>= 1.9.3'
   spec.authors       = ['Seapagan']
   spec.email         = ['seapagan@gmail.com']
 
