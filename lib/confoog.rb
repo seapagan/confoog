@@ -1,6 +1,8 @@
 require 'confoog/version'
 require 'yaml'
 
+# rubocop:disable LineLength
+
 # Overall module.
 # Contains Class Confoog::Settings
 module Confoog
@@ -47,9 +49,6 @@ module Confoog
     filename: DEFAULT_CONFIG
   }
 
-  # rubocop:disable LineLength
-
-  # Class : Settings.
   # Provide an encapsulated class to access a YAML configuration file.
   # @!attribute [r] filename
   #   @return [String] The configuration filename in use.
