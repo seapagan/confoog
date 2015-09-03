@@ -85,7 +85,7 @@ module Confoog
     attr_reader :filename, :location, :status
 
     # rubocop:enable LineLength
-    
+
     # Setup the class with specified parameters or default values if any or all
     # are absent.
     # All parameters are optional.
