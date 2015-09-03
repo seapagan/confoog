@@ -48,6 +48,7 @@ module Confoog
   }
 
   # rubocop:disable LineLength
+
   # Class : Settings.
   # Provide an encapsulated class to access a YAML configuration file.
   # @!attribute [r] filename
@@ -80,10 +81,11 @@ module Confoog
   #   # => {:one => "for the money", :two => "for the show", :three => "to get ready"}
   #   settings[50][:two]
   #   # => "for the show"
-  # rubocop:enable LineLength
   class Settings
     attr_reader :filename, :location, :status
 
+    # rubocop:enable LineLength
+    
     # Setup the class with specified parameters or default values if any or all
     # are absent.
     # All parameters are optional.
@@ -195,7 +197,7 @@ module Confoog
 
     # Returns the fully qualified path to the configuration file in use.
     # @example
-    #   path = getpath
+    #   path = config_path
     # @return [String] Full path and filename of the configuration file.
     def config_path
       File.expand_path(File.join(@location, @filename))
