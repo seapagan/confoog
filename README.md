@@ -63,6 +63,7 @@ settings.load # load the settings from YAML file.
 ```
 
 Confoog will take several parameters on creation, to specify the default config file and location. For example :
+
 ```ruby
 settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
 ```
