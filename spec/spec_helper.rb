@@ -1,6 +1,12 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start
 
 require 'pp' # work around https://github.com/defunkt/fakefs/issues/99
 require 'confoog'
