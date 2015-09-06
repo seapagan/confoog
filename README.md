@@ -8,9 +8,9 @@
 
 A simple Gem to add YAML configuration files to your Ruby script / Gem.
 
-__*A WORK IN PROGRESS, Not really ready for production use. The API may be subject to changes before hitting version 1.0.0*__
+__*Note : While this Gem is fully functional, the API may be subject to changes before hitting version 1.0.0*__
 
-This will add a class that takes care of all your configuration needs for Ruby scripts and Gems.
+This Gem allows your Ruby scripts and Gems to save and load its settings to a configuration file in YAML format.
 
 ## Installation
 
@@ -121,6 +121,8 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 
+Run `rake` to run the RSpec tests, which also runs `RuboCop` and `inch --pedantic` too.
+
 ## Contributing
 
 1. Fork it
@@ -128,6 +130,12 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+Please note - This Gem currently passes 100% on both [RuboCop][rubocop] and [Inch-CI][inch] (on pedantic mode), so all pull requests should do likewise.
+Running `rake` will automatically test both these along with the RSpec tests.
+
+[rubocop]: https://github.com/bbatsov/rubocop
+[inch]: https://inch-ci.org
 
 ## Versioning
 
