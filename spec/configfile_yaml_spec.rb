@@ -45,6 +45,17 @@ describe Confoog::Settings, fakefs: true do
       s.save
       expect(FileUtils.compare_file('/home/tests/.confoog', '/home/tests/reference.yaml')).to be_truthy
     end
+
+    it 'should return error status but raise no exception if it cannot write to the file' do
+      s = subject.new(location: '/home/tests', create_file: true)
+      s['location'] = '/home/tests'
+      s['recurse'] = true
+      File.delete(s.config_path)
+      Dir.mkdir(s.config_path)
+      expect($stderr).to receive(:puts).with(/Cannot/)
+      s.save
+      expect(s.status[:errors]).to eq Confoog::ERR_CANT_SAVE_CONFIGURATION
+    end
   end
 
   context 'when loading config file' do

@@ -68,6 +68,7 @@ describe Confoog do
         settings.quiet = false
         expect($stderr).to receive(:puts) # not fussed what text, just that it exists
         settings.location = 'this will fail'
+        expect(settings.quiet).to be false
       end
       it 'should return the full filename and path in .config_path' do
         settings = subject.new(location: '/home/tests', filename: '.i_do_exist')

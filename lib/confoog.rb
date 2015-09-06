@@ -214,6 +214,7 @@ module Confoog
       file.write(@config.to_yaml)
       file.close
     rescue
+      status_set(errors: ERR_CANT_SAVE_CONFIGURATION)
       console_output("Cannot save configuration data to #{config_path}",
                      OUTPUT_SEVERITY[:ERR])
     end
