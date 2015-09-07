@@ -38,8 +38,10 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
     end
 
-    it 'should not write to disk if auto_save: is not specified' do
-      pending 'to write test'
+    it 'should by default save to disk if auto_save: is not specified' do
+      s = subject.new(location: '/home/tests', create_file: true)
+      s['location'] = '/home/tests'
+      expect(File.read('/home/tests/.confoog')).to include '/home/tests'
     end
 
     it 'should save an easy config to valid YAML' do
@@ -63,15 +65,23 @@ describe Confoog::Settings, fakefs: true do
 
     context 'when auto_save: true' do
       it 'should automatically save when a new variable is added' do
-        pending 'to write test'
+        s = subject.new(location: '/home/tests', create_file: true, auto_save: true)
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).to include '/home/tests'
       end
 
       it 'should automatically save when a variable is changed' do
-        pending 'to write test'
+        s = subject.new(location: '/home/tests', create_file: true, auto_save: true)
+        s['location'] = '/home/tests'
+        s['location'] = '/usr/my/directory'
+        expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
+        expect(File.read('/home/tests/.confoog')).to include '/usr/my/directory'
       end
 
       it 'however should do none of this if auto_save: false' do
-        pending 'to write test'
+        s = subject.new(location: '/home/tests', create_file: true, auto_save: false)
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
       end
     end
   end

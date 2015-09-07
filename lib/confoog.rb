@@ -47,7 +47,8 @@ module Confoog
     prefix: 'Configuration',
     location: '~/',
     filename: DEFAULT_CONFIG,
-    auto_load: false
+    auto_load: false,
+    auto_save: true
   }
 
   # Provide an encapsulated class to access a YAML configuration file.
@@ -189,13 +190,16 @@ module Confoog
       @config[key]
     end
 
-    # Set a configuration key
+    # Set a configuration key.
+    # If auto_save: true then will also update the config file (default is true)
     # @example
     #   settings[:key] = "Value"
     #   settings[:array] = ["first", "second", "third"]
     # @return [<various>] Returns the variable that was assigned.
     def []=(key, value)
       @config[key] = value
+      # automatically save to file if this has been requested.
+      save unless @options[:auto_save] == false
     end
 
     # Returns the fully qualified path to the configuration file in use.
