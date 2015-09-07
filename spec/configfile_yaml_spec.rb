@@ -38,6 +38,10 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
     end
 
+    it 'should not write to disk if auto_save: is not specified' do
+      pending 'to write test'
+    end
+
     it 'should save an easy config to valid YAML' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'
@@ -55,6 +59,20 @@ describe Confoog::Settings, fakefs: true do
       expect($stderr).to receive(:puts).with(/Cannot/)
       s.save
       expect(s.status[:errors]).to eq Confoog::ERR_CANT_SAVE_CONFIGURATION
+    end
+
+    context 'when auto_save: true' do
+      it 'should automatically save when a new variable is added' do
+        pending 'to write test'
+      end
+
+      it 'should automatically save when a variable is changed' do
+        pending 'to write test'
+      end
+
+      it 'however should do none of this if auto_save: false' do
+        pending 'to write test'
+      end
     end
   end
 
