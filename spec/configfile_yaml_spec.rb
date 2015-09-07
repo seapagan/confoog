@@ -8,11 +8,11 @@ describe Confoog::Settings, fakefs: true do
     # create an internal STDERR so we can still test this but it will not
     # clutter up the output
     $original_stderr = $stderr
-    $stderr = StringIO.new
+    #$stderr = StringIO.new
   end
 
   after(:all) do
-    $stderr = $original_stderr
+    #$stderr = $original_stderr
   end
 
   before(:each) do
@@ -79,6 +79,30 @@ describe Confoog::Settings, fakefs: true do
       expect($stderr).to receive(:puts).with(/empty/)
       s.load
       expect(s.status[:errors]).to eq Confoog::ERR_NOT_LOADING_EMPTY_FILE
+    end
+  end
+
+  context 'when created with auto_load: true' do
+    it 'should automatically load the specified configuration file' do
+      s = subject.new(location: '/home/tests', filename: 'reference.yaml', auto_load: true)
+      expect(s['location']).to eq '/home/tests'
+      expect(s['recurse']).to be true
+    end
+  end
+
+  context 'when created with auto_load: false' do
+    it 'should not load the specified configuration file' do
+      s = subject.new(location: '/home/tests', filename: 'reference.yaml', auto_load: false)
+      expect(s['location']).to be nil
+      expect(s['recurse']).to be nil
+    end
+  end
+
+  context 'when created without specifying an auto_load: value' do
+    it 'should not load the specified configuration file' do
+      s = subject.new(location: '/home/tests', filename: 'reference.yaml')
+      expect(s['location']).to be nil
+      expect(s['recurse']).to be nil
     end
   end
 end
