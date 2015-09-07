@@ -46,7 +46,8 @@ module Confoog
     quiet: false,
     prefix: 'Configuration',
     location: '~/',
-    filename: DEFAULT_CONFIG
+    filename: DEFAULT_CONFIG,
+    auto_load: false
   }
 
   # Provide an encapsulated class to access a YAML configuration file.
@@ -106,6 +107,9 @@ module Confoog
       status_set(errors: ERR_NO_ERROR)
       # make sure the file exists or can be created...
       check_exists(options)
+
+      # if auto_load is true, automatically load from file
+      load unless @options[:auto_load] == false
     end
 
     # Return the value of the 'quiet' option.
