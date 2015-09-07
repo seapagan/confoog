@@ -79,6 +79,9 @@ prefix: 'My Application'
 
 # Should we avoid outputting errors to the console? (ie in a GUI app)
 quiet: true | false
+
+# Should we automatically load the configuration file when the class is created?
+auto_load: true | false
 ```
 If these are not specified, Confoog will use the following defaults :
 
@@ -88,6 +91,7 @@ filename: '.confoog'
 create_file: false
 prefix: 'Configuration'
 quiet: false
+auto_load: false
 ```
 
 Confoog will set the following error constants which will be returned in the `.status['errors']` variable as needed :
