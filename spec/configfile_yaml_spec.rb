@@ -84,6 +84,32 @@ describe Confoog::Settings, fakefs: true do
         expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
       end
     end
+
+    context 'using the #autosave method before changing or adding variables' do
+      it 'should correctly set and read the #autosave status' do
+        s = subject.new(location: '/home/tests', create_file: true, auto_save: true)
+        s.autosave = false
+        expect(s.autosave).to be false
+        s.autosave = true
+        expect(s.autosave).to be true
+      end
+
+      it 'should not save if #autosave is set false' do
+        s = subject.new(location: '/home/tests', create_file: true, auto_save: true)
+        s.autosave = false
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
+      end
+
+      it 'should save if #autosave is true' do
+        s = subject.new(location: '/home/tests', create_file: true, auto_save: false)
+        s.autosave = true
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).to include '/home/tests'
+      end
+
+    end
+
   end
 
   context 'when loading config file' do

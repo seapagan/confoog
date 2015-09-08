@@ -113,6 +113,26 @@ module Confoog
       load unless @options[:auto_load] == false
     end
 
+    # Return the value of the 'auto_save' option.
+    # @example
+    #   autosave_status = settings.autosave
+    #   => true
+    # @param [None]
+    # @return [Boolen] true if we are autosaving on change or addition.
+    def autosave
+      @options[:auto_save]
+    end
+
+    # Change the 'auto_save' option.
+    # @example
+    #   settings.autosave = false
+    #   => false
+    # @return [Boolean] The new value [true | false]
+    # @param autosave [Boolean] True to send messages to console for errors.
+    def autosave=(autosave)
+      @options[:auto_save] = autosave
+    end
+
     # Return the value of the 'quiet' option.
     # @example
     #   is_quiet = settings.quiet
