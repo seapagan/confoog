@@ -47,8 +47,8 @@ module Confoog
     prefix: 'Configuration',
     location: '~/',
     filename: DEFAULT_CONFIG,
-    auto_load: false,
-    auto_save: true
+    autoload: false,
+    autosave: true
   }
 
   # Provide an encapsulated class to access a YAML configuration file.
@@ -110,7 +110,7 @@ module Confoog
       check_exists(options)
 
       # if auto_load is true, automatically load from file
-      load unless @options[:auto_load] == false
+      load unless @options[:autoload] == false
     end
 
     # Return the value of the 'auto_save' option.
@@ -120,7 +120,7 @@ module Confoog
     # @param [None]
     # @return [Boolen] true if we are autosaving on change or addition.
     def autosave
-      @options[:auto_save]
+      @options[:autosave]
     end
 
     # Change the 'auto_save' option.
@@ -130,7 +130,7 @@ module Confoog
     # @return [Boolean] The new value [true | false]
     # @param autosave [Boolean] True to send messages to console for errors.
     def autosave=(autosave)
-      @options[:auto_save] = autosave
+      @options[:autosave] = autosave
     end
 
     # Return the value of the 'quiet' option.
@@ -219,7 +219,7 @@ module Confoog
     def []=(key, value)
       @config[key] = value
       # automatically save to file if this has been requested.
-      save unless @options[:auto_save] == false
+      save unless @options[:autosave] == false
     end
 
     # Returns the fully qualified path to the configuration file in use.
