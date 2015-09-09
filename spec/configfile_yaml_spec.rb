@@ -38,7 +38,7 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
     end
 
-    it 'should by default save to disk if auto_save: is not specified' do
+    it 'should by default save to disk if autosave: is not specified' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'
       expect(File.read('/home/tests/.confoog')).to include '/home/tests'
@@ -78,7 +78,7 @@ describe Confoog::Settings, fakefs: true do
         expect(File.read('/home/tests/.confoog')).to include '/usr/my/directory'
       end
 
-      it 'however should do none of this if auto_save: false' do
+      it 'however should do none of this if autosave: false' do
         s = subject.new(location: '/home/tests', create_file: true, autosave: false)
         s['location'] = '/home/tests'
         expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'

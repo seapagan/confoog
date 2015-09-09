@@ -31,7 +31,7 @@ Or install it yourself as:
 ## Usage
 Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recorded for each variable and accessed (for a hash) by `settings[variable][hash_key]` or array using `settings[array].each`. In other words, treat the return from `settings[var]` as the type it contains. See examples below.
 
-By default, each time a configuration variable is created or changed the file on disk will be updated with this addition or change. If you intend to make a lot of consecutive changes or do not want the small performance hit of this, pass `autosave: false` as a parameter to #new, or change set it false using the #autosave accessor.
+By default, each time a configuration variable is created or changed the file on disk will be updated with this addition or change. If you intend to make a lot of consecutive changes or do not want the small performance hit of this, pass `autosave: false` as a parameter to #new, or set it false using the #autosave accessor.
 
 ```ruby
 require 'confoog'
