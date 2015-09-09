@@ -1,4 +1,5 @@
 require 'confoog/version'
+require 'confoog/utility'
 require 'yaml'
 
 # rubocop:disable LineLength
@@ -83,6 +84,7 @@ module Confoog
   #   settings[50][:two]
   #   # => "for the show"
   class Settings
+    include ConfoogUtils
     attr_reader :filename, :location, :status
 
     # rubocop:enable LineLength
@@ -231,11 +233,6 @@ module Confoog
     end
 
     private
-
-    def console_output(message, severity)
-      return unless @options[:quiet] == false
-      $stderr.puts "#{@options[:prefix]} : #{severity} - #{message}"
-    end
 
     def save_to_yaml
       file = File.open(config_path, 'w')
