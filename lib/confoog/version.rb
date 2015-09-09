@@ -2,5 +2,5 @@
 module Confoog
   # Version of this Gem, using Semantic Versioning 2.0.0
   # http://semver.org/
-  VERSION = '0.3.0'
+  VERSION = '0.4.0'
 end
