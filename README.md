@@ -59,6 +59,10 @@ settings[50]
 settings[50][:two]
 # => "for the show"
 
+settings.quiet = true # squelch any error or status messages to console
+
+settings.autosave = false # disable autosave if it has been enabled with #new or #autosave
+
 settings.save # save all current parameters to the YAML file
 
 settings.load # load the settings from YAML file.
