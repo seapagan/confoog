@@ -7,12 +7,12 @@ describe Confoog::Settings, fakefs: true do
   before(:all) do
     # create an internal STDERR so we can still test this but it will not
     # clutter up the output
-    $original_stderr = $stderr
-    $stderr = StringIO.new
+    # $original_stderr = $stderr
+    # $stderr = StringIO.new
   end
 
   after(:all) do
-    $stderr = $original_stderr
+    # $stderr = $original_stderr
   end
 
   before(:each) do
@@ -38,6 +38,12 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
     end
 
+    it 'should by default save to disk if auto_save: is not specified' do
+      s = subject.new(location: '/home/tests', create_file: true)
+      s['location'] = '/home/tests'
+      expect(File.read('/home/tests/.confoog')).to include '/home/tests'
+    end
+
     it 'should save an easy config to valid YAML' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'
@@ -55,6 +61,52 @@ describe Confoog::Settings, fakefs: true do
       expect($stderr).to receive(:puts).with(/Cannot/)
       s.save
       expect(s.status[:errors]).to eq Confoog::ERR_CANT_SAVE_CONFIGURATION
+    end
+
+    context 'when auto_save: true' do
+      it 'should automatically save when a new variable is added' do
+        s = subject.new(location: '/home/tests', create_file: true, autosave: true)
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).to include '/home/tests'
+      end
+
+      it 'should automatically save when a variable is changed' do
+        s = subject.new(location: '/home/tests', create_file: true, autosave: true)
+        s['location'] = '/home/tests'
+        s['location'] = '/usr/my/directory'
+        expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
+        expect(File.read('/home/tests/.confoog')).to include '/usr/my/directory'
+      end
+
+      it 'however should do none of this if auto_save: false' do
+        s = subject.new(location: '/home/tests', create_file: true, autosave: false)
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
+      end
+    end
+
+    context 'using the #autosave method before changing or adding variables' do
+      it 'should correctly set and read the #autosave status' do
+        s = subject.new(location: '/home/tests', create_file: true, autosave: true)
+        s.autosave = false
+        expect(s.autosave).to be false
+        s.autosave = true
+        expect(s.autosave).to be true
+      end
+
+      it 'should not save if #autosave is set false' do
+        s = subject.new(location: '/home/tests', create_file: true, autosave: true)
+        s.autosave = false
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
+      end
+
+      it 'should save if #autosave is true' do
+        s = subject.new(location: '/home/tests', create_file: true, autosave: false)
+        s.autosave = true
+        s['location'] = '/home/tests'
+        expect(File.read('/home/tests/.confoog')).to include '/home/tests'
+      end
     end
   end
 
@@ -84,7 +136,7 @@ describe Confoog::Settings, fakefs: true do
 
   context 'when created with auto_load: true' do
     it 'should automatically load the specified configuration file' do
-      s = subject.new(location: '/home/tests', filename: 'reference.yaml', auto_load: true)
+      s = subject.new(location: '/home/tests', filename: 'reference.yaml', autoload: true)
       expect(s['location']).to eq '/home/tests'
       expect(s['recurse']).to be true
     end
@@ -92,7 +144,7 @@ describe Confoog::Settings, fakefs: true do
 
   context 'when created with auto_load: false' do
     it 'should not load the specified configuration file' do
-      s = subject.new(location: '/home/tests', filename: 'reference.yaml', auto_load: false)
+      s = subject.new(location: '/home/tests', filename: 'reference.yaml', autoload: false)
       expect(s['location']).to be nil
       expect(s['recurse']).to be nil
     end

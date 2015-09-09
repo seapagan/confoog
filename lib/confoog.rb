@@ -1,4 +1,5 @@
 require 'confoog/version'
+require 'confoog/utility'
 require 'yaml'
 
 # rubocop:disable LineLength
@@ -47,7 +48,8 @@ module Confoog
     prefix: 'Configuration',
     location: '~/',
     filename: DEFAULT_CONFIG,
-    auto_load: false
+    autoload: false,
+    autosave: true
   }
 
   # Provide an encapsulated class to access a YAML configuration file.
@@ -82,6 +84,7 @@ module Confoog
   #   settings[50][:two]
   #   # => "for the show"
   class Settings
+    include ConfoogUtils
     attr_reader :filename, :location, :status
 
     # rubocop:enable LineLength
@@ -109,7 +112,27 @@ module Confoog
       check_exists(options)
 
       # if auto_load is true, automatically load from file
-      load unless @options[:auto_load] == false
+      load unless @options[:autoload] == false
+    end
+
+    # Return the value of the 'auto_save' option.
+    # @example
+    #   autosave_status = settings.autosave
+    #   => true
+    # @param [None]
+    # @return [Boolen] true if we are autosaving on change or addition.
+    def autosave
+      @options[:autosave]
+    end
+
+    # Change the 'auto_save' option.
+    # @example
+    #   settings.autosave = false
+    #   => false
+    # @return [Boolean] The new value [true | false]
+    # @param autosave [Boolean] True to send messages to console for errors.
+    def autosave=(autosave)
+      @options[:autosave] = autosave
     end
 
     # Return the value of the 'quiet' option.
@@ -189,13 +212,16 @@ module Confoog
       @config[key]
     end
 
-    # Set a configuration key
+    # Set a configuration key.
+    # If auto_save: true then will also update the config file (default is true)
     # @example
     #   settings[:key] = "Value"
     #   settings[:array] = ["first", "second", "third"]
     # @return [<various>] Returns the variable that was assigned.
     def []=(key, value)
       @config[key] = value
+      # automatically save to file if this has been requested.
+      save unless @options[:autosave] == false
     end
 
     # Returns the fully qualified path to the configuration file in use.
@@ -207,11 +233,6 @@ module Confoog
     end
 
     private
-
-    def console_output(message, severity)
-      return unless @options[:quiet] == false
-      $stderr.puts "#{@options[:prefix]} : #{severity} - #{message}"
-    end
 
     def save_to_yaml
       file = File.open(config_path, 'w')

@@ -70,7 +70,7 @@ describe Confoog do
         settings.location = 'this will fail'
         expect(settings.quiet).to be false
       end
-      it 'should return the full filename and path in .config_path' do
+      it 'should return the full filename and path in #config_path' do
         settings = subject.new(location: '/home/tests', filename: '.i_do_exist')
         expect(settings.config_path).to eq '/home/tests/.i_do_exist'
       end

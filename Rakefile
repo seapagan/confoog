@@ -9,8 +9,7 @@ RuboCop::RakeTask.new do |task|
   task.options << 'lib'
 end
 Inch::Rake::Suggest.new do |suggest|
-  suggest.args << "--pedantic"
+  suggest.args << '--pedantic'
 end
-
 
 task default: [:rubocop, :inch, :spec]

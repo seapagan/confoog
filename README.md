@@ -31,6 +31,8 @@ Or install it yourself as:
 ## Usage
 Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recorded for each variable and accessed (for a hash) by `settings[variable][hash_key]` or array using `settings[array].each`. In other words, treat the return from `settings[var]` as the type it contains. See examples below.
 
+By default, each time a configuration variable is created or changed the file on disk will be updated with this addition or change. If you intend to make a lot of consecutive changes or do not want the small performance hit of this, pass `autosave: false` as a parameter to #new, or change set it false using the #autosave accessor.
+
 ```ruby
 require 'confoog'
 
@@ -57,6 +59,10 @@ settings[50]
 settings[50][:two]
 # => "for the show"
 
+settings.quiet = true # squelch any error or status messages to console
+
+settings.autosave = false # disable autosave if it has been enabled with #new or #autosave
+
 settings.save # save all current parameters to the YAML file
 
 settings.load # load the settings from YAML file.
@@ -81,9 +87,12 @@ prefix: 'My Application'
 quiet: true | false
 
 # Should we automatically load the configuration file when the class is created?
-auto_load: true | false
+autoload: true | false
+
+# Should we automatically save the configuration file when a variable is created or changed?
+autosave: true | false
 ```
-If these are not specified, Confoog will use the following defaults :
+If any of these are not specified, Confoog will use the following defaults :
 
 ```ruby
 location: '~/'
@@ -91,7 +100,8 @@ filename: '.confoog'
 create_file: false
 prefix: 'Configuration'
 quiet: false
-auto_load: false
+autoload: false
+autosave: true
 ```
 
 Confoog will set the following error constants which will be returned in the `.status['errors']` variable as needed :
@@ -117,7 +127,6 @@ Thoughts in no particular order.
 
 - Restrict configuration variables to a specified subset, or to only those that already exist in the YAML file.
 - A better way of dealing with multi-level variables - i.e. nested arrays, hashes etc.
-- option to save config file after any config variables are changed, not just explicitly with `Confoog::Settings.save`
 
 ## Development
 
