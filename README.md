@@ -127,7 +127,6 @@ Thoughts in no particular order.
 
 - Restrict configuration variables to a specified subset, or to only those that already exist in the YAML file.
 - A better way of dealing with multi-level variables - i.e. nested arrays, hashes etc.
-- option to save config file after any config variables are changed, not just explicitly with `Confoog::Settings.save`
 
 ## Development
 
