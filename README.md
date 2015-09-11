@@ -114,6 +114,7 @@ ERR_CANT_CREATE_FILE = 4 # cannot create the requested configuration file
 ERR_NOT_WRITING_EMPTY_FILE = 8 # not attempting to save an empty configuration
 ERR_CANT_SAVE_CONFIGURATION = 16 # Failed to save the configuration file
 ERR_NOT_LOADING_EMPTY_FILE = 32 # not atempting to load an empty config file
+ERR_CANT_LOAD = 64 # Cannot load configuration data from file.
 
 INFO_FILE_CREATED = 256 # Information - specified file was created
 INFO_FILE_LOADED = 512 # Information - Config file was loaded successfully

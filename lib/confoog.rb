@@ -1,5 +1,5 @@
 require 'confoog/version'
-require 'confoog/utility'
+require 'confoog/status'
 require 'yaml'
 
 # rubocop:disable LineLength
@@ -9,37 +9,6 @@ require 'yaml'
 module Confoog
   # The default filename used if none specified when created.
   DEFAULT_CONFIG = '.confoog'
-
-  # Error messages to be returned
-
-  # No error condition exists
-  ERR_NO_ERROR = 0
-  # The specified file does not exist
-  ERR_FILE_NOT_EXIST = 1
-  # You cannot change location or filename after class is instantiated
-  ERR_CANT_CHANGE = 2
-  # Was unable to create the specified file
-  ERR_CANT_CREATE_FILE = 4
-  # There are no configuration variables set, so not writing empty file
-  ERR_NOT_WRITING_EMPTY_FILE = 8
-  # Cannot save to the specified file for some reason
-  ERR_CANT_SAVE_CONFIGURATION = 16
-  # The specified file is empty so not trying to load settings from it
-  ERR_NOT_LOADING_EMPTY_FILE = 32
-
-  # Info messages to be returned
-
-  # Information - file was created successfully
-  INFO_FILE_CREATED = 256
-  # Information - configuration was successfully loaded
-  INFO_FILE_LOADED = 512
-
-  # Hash containing text versions of the assorted error severity.
-  OUTPUT_SEVERITY = {
-    ERR: 'Error',
-    WARN: 'Warning',
-    INFO: 'Information'
-  }
 
   # Hash containing default values of initialization variables
   DEFAULT_OPTIONS = {
@@ -84,7 +53,6 @@ module Confoog
   #   settings[50][:two]
   #   # => "for the show"
   class Settings
-    include ConfoogUtils
     attr_reader :filename, :location, :status
 
     # rubocop:enable LineLength
@@ -100,14 +68,14 @@ module Confoog
       @options.default = false
 
       # Hash containing any error or return from methods
-      @status = {}
+      @status = Status.new(@options[:quiet], @options[:prefix])
       @location = @options[:location]
       @filename = @options[:filename]
 
       @config = {}
 
       # clear the error condition as default.
-      status_set(errors: ERR_NO_ERROR)
+      @status.clear_error
       # make sure the file exists or can be created...
       check_exists(options)
 
@@ -115,7 +83,7 @@ module Confoog
       load unless @options[:autoload] == false
     end
 
-    # Return the value of the 'auto_save' option.
+    # Return the value of the 'autosave' option.
     # @example
     #   autosave_status = settings.autosave
     #   => true
@@ -125,7 +93,7 @@ module Confoog
       @options[:autosave]
     end
 
-    # Change the 'auto_save' option.
+    # Change the 'autosave' option.
     # @example
     #   settings.autosave = false
     #   => false
@@ -141,7 +109,7 @@ module Confoog
     # @param [None]
     # @return [Boolean] True if we are not writing to the console on error
     def quiet
-      @options[:quiet]
+      @status.quiet
     end
 
     # Change the 'quiet' option.
@@ -150,7 +118,7 @@ module Confoog
     # @return [Boolean] The new value [true | false]
     # @param quiet [Boolean] True to send messages to console for errors.
     def quiet=(quiet)
-      @options[:quiet] = quiet
+      @status.quiet = quiet
     end
 
     # Save the entire configuration (@config) to the YAML file.
@@ -162,9 +130,7 @@ module Confoog
       if @config.count > 0
         save_to_yaml
       else
-        console_output("Not saving empty configuration data to #{config_path}",
-                       OUTPUT_SEVERITY[:WARN])
-        status_set(errors: ERR_NOT_WRITING_EMPTY_FILE)
+        @status.set(errors: Status::ERR_NOT_WRITING_EMPTY_FILE)
       end
     end
 
@@ -175,33 +141,28 @@ module Confoog
     # @return Unspecified
     def load
       @config = YAML.load_file(config_path)
-      status_set(errors: INFO_FILE_LOADED)
+      @status.set(errors: Status::INFO_FILE_LOADED)
       if @config == false
-        console_output("Configuration file #{config_path} is empty!",
-                       OUTPUT_SEVERITY[:WARN])
-        status_set(errors: ERR_NOT_LOADING_EMPTY_FILE)
+        # console_output("Configuration file #{config_path} is empty!",
+        #                OUTPUT_SEVERITY[:WARN])
+        @status.set(errors: Status::ERR_NOT_LOADING_EMPTY_FILE)
       end
     rescue
-      console_output("Cannot load configuration data from #{config_path}",
-                     OUTPUT_SEVERITY[:ERR])
+      @status.set(errors: Status::ERR_CANT_LOAD)
     end
 
     # dummy method currently to stop changing location by caller once created,
     # @return [hash] an error flag in the ':status' variable.
     # @param [Optional] Parameter is ignored
     def location=(*)
-      status_set(errors: ERR_CANT_CHANGE)
-      console_output('Cannot change file location after creation',
-                     OUTPUT_SEVERITY[:WARN])
+      @status.set(errors: Status::ERR_CANT_CHANGE)
     end
 
     # dummy method currently to stop changing filename by caller once created,
     # @return [hash] an error flag in the ':status' variable.
     # @param optional Parameter is ignored
     def filename=(*)
-      status_set(errors: ERR_CANT_CHANGE)
-      console_output('Cannot change filename after creation',
-                     OUTPUT_SEVERITY[:WARN])
+      @status.set(errors: Status::ERR_CANT_CHANGE)
     end
 
     # Read the configuration key (key)
@@ -213,7 +174,7 @@ module Confoog
     end
 
     # Set a configuration key.
-    # If auto_save: true then will also update the config file (default is true)
+    # If autosave: true then will also update the config file (default is true)
     # @example
     #   settings[:key] = "Value"
     #   settings[:array] = ["first", "second", "third"]
@@ -239,37 +200,25 @@ module Confoog
       file.write(@config.to_yaml)
       file.close
     rescue
-      status_set(errors: ERR_CANT_SAVE_CONFIGURATION)
-      console_output("Cannot save configuration data to #{config_path}",
-                     OUTPUT_SEVERITY[:ERR])
+      @status.set(errors: Status::ERR_CANT_SAVE_CONFIGURATION)
     end
 
     def create_new_file
       File.new(config_path, 'w').close
-      status_set(config_exists: true, errors: INFO_FILE_CREATED)
+      @status.set(config_exists: true, errors: Status::INFO_FILE_CREATED)
     rescue
-      status_set(config_exists: false, errors: ERR_CANT_CREATE_FILE)
-      console_output('Cannot create the specified Configuration file!',
-                     OUTPUT_SEVERITY[:ERR])
-    end
-
-    def status_set(status)
-      status.each do |key, value|
-        @status[key] = value
-      end
+      @status.set(config_exists: false, errors: Status::ERR_CANT_CREATE_FILE)
     end
 
     def check_exists(options)
-      status_set(config_exists: true)
+      @status[:config_exists] = true
       return if File.exist?(config_path)
 
       # file does not exist so we create if requested otherwise error out
       if options[:create_file] == true
         create_new_file
       else
-        status_set(config_exists: false, errors: ERR_FILE_NOT_EXIST)
-        console_output('The specified Configuration file does not exist.',
-                       OUTPUT_SEVERITY[:ERR])
+        @status.set(config_exists: false, errors: Status::ERR_FILE_NOT_EXIST)
       end
     end
   end
