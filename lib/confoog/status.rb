@@ -98,7 +98,8 @@ class Status
       @status[key] = value
     end
     return if ERROR_STRINGS[@status[:errors]].nil?
-    console_output(ERROR_STRINGS[@status[:errors]], 'Error')
+    severity = (@status[:errors] <= 64) ? 'Error' : 'Info'
+    console_output(ERROR_STRINGS[@status[:errors]], severity)
   end
 
   private
