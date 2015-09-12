@@ -35,7 +35,7 @@ describe Confoog::Settings, fakefs: true do
       expect($stderr).to receive(:puts).with(/empty/)
       s.save
       expect(File.size('/home/tests/.confoog')).to be 0
-      expect(s.status[:errors]).to eq Confoog::ERR_NOT_WRITING_EMPTY_FILE
+      expect(s.status[:errors]).to eq Status::ERR_NOT_WRITING_EMPTY_FILE
     end
 
     it 'should by default save to disk if autosave: is not specified' do
@@ -60,7 +60,7 @@ describe Confoog::Settings, fakefs: true do
       Dir.mkdir(s.config_path)
       expect($stderr).to receive(:puts).with(/Cannot/)
       s.save
-      expect(s.status[:errors]).to eq Confoog::ERR_CANT_SAVE_CONFIGURATION
+      expect(s.status[:errors]).to eq Status::ERR_CANT_SAVE_CONFIGURATION
     end
 
     context 'when auto_save: true' do
@@ -121,16 +121,16 @@ describe Confoog::Settings, fakefs: true do
     it 'should complain if we try to load a non-existing file' do
       expect($stderr).to receive(:puts).with(/does not exist/)
       s = subject.new(location: '/home/tests', filename: '.i_dont_exist')
-      expect($stderr).to receive(:puts).with(/Cannot load configuration data from/)
+      expect($stderr).to receive(:puts).with(/Cannot load configuration Data/)
       s.load
-      expect(s.status[:errors]).to eq Confoog::ERR_FILE_NOT_EXIST
+      expect(s.status[:errors]).to eq Status::ERR_CANT_LOAD
     end
 
     it 'should comment if the file is empty' do
       s = subject.new(location: '/home/tests', create_file: true)
       expect($stderr).to receive(:puts).with(/empty/)
       s.load
-      expect(s.status[:errors]).to eq Confoog::ERR_NOT_LOADING_EMPTY_FILE
+      expect(s.status[:errors]).to eq Status::ERR_NOT_LOADING_EMPTY_FILE
     end
   end
 
