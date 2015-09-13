@@ -7,12 +7,12 @@ describe Confoog do
   before(:all) do
     # create an internal STDERR so we can still test this but it will not
     # clutter up the output
-    $original_stderr = $stderr
+    @original_stderr = $stderr
     $stderr = StringIO.new
   end
 
   after(:all) do
-    $stderr = $original_stderr
+    $stderr = @original_stderr
   end
 
   it 'has a version number' do
@@ -43,16 +43,14 @@ describe Confoog do
         expect(settings.status[:errors]).to eq Status::ERR_NO_ERROR
       end
       it 'should set sensible defaults' do
-        expect(settings.filename).to be Confoog::DEFAULT_CONFIG
-        expect(settings.location).to eq '~/'
+        expect(settings.config_path).to eq File.expand_path('~/.confoog')
       end
     end
 
     context 'with parameters' do
       it 'should accept both location and filename' do
         settings = subject.new(filename: '.myconfigfile', location: '/put/it/here')
-        expect(settings.filename).to eq '.myconfigfile'
-        expect(settings.location).to eq '/put/it/here'
+        expect(settings.config_path).to eq '/put/it/here/.myconfigfile'
         expect(settings.status[:errors]).to eq Status::ERR_NO_ERROR
       end
       it 'should allow us to specify the default prefix for console messages and output this to STDERR' do
@@ -67,7 +65,7 @@ describe Confoog do
         settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
         settings.quiet = false
         expect($stderr).to receive(:puts) # not fussed what text, just that it exists
-        settings.location = 'this will fail'
+        settings.save
         expect(settings.quiet).to be false
       end
       it 'should return the full filename and path in #config_path' do
@@ -103,26 +101,6 @@ describe Confoog do
         # cant seem to get fakefs to change attributes on files so cant create
         # a read-only or not-owned file to test. Works on a real fs though.
       end
-    end
-  end
-
-  context 'after created', fakefs: true do
-    before(:each) do
-      # create fake dir and files
-      FileUtils.mkdir_p('/home/tests')
-      Dir.chdir('/home/tests') do
-        File.new('.i_do_exist', 'w').close
-      end
-    end
-
-    it 'should not allow us to change the filename or location' do
-      settings = subject.new(location: '/home/tests', filename: '.i_do_exist')
-      settings.location = '/home/moretests'
-      expect(settings.location).to eq '/home/tests'
-      expect(settings.status[:errors]).to eq Status::ERR_CANT_CHANGE
-      settings.filename = '.newfile'
-      expect(settings.filename).to eq '.i_do_exist'
-      expect(settings.status[:errors]).to eq Status::ERR_CANT_CHANGE
     end
   end
 end

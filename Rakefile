@@ -8,6 +8,7 @@ RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new do |task|
   task.options << 'lib'
 end
+
 Inch::Rake::Suggest.new do |suggest|
   suggest.args << '--pedantic'
 end

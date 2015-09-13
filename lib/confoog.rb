@@ -22,10 +22,6 @@ module Confoog
   }
 
   # Provide an encapsulated class to access a YAML configuration file.
-  # @!attribute [r] filename
-  #   @return [String] The configuration filename in use.
-  # @!attribute [r] location
-  #   @return [String] The directory storing the configuration file.
   # @!attribute [r] status
   #   @return [Hash] A hash containing status variables.
   # @example
@@ -53,7 +49,7 @@ module Confoog
   #   settings[50][:two]
   #   # => "for the show"
   class Settings
-    attr_reader :filename, :location, :status
+    attr_reader :status
 
     # rubocop:enable LineLength
 
@@ -69,13 +65,12 @@ module Confoog
 
       # Hash containing any error or return from methods
       @status = Status.new(@options[:quiet], @options[:prefix])
-      @location = @options[:location]
-      @filename = @options[:filename]
-
-      @config = {}
-
       # clear the error condition as default.
       @status.clear_error
+
+      # Initialize the Configuration to and empty hash.
+      @config = {}
+
       # make sure the file exists or can be created...
       check_exists(options)
 
@@ -149,20 +144,6 @@ module Confoog
       @status.set(errors: Status::ERR_CANT_LOAD)
     end
 
-    # dummy method currently to stop changing location by caller once created,
-    # @return [hash] an error flag in the ':status' variable.
-    # @param [Optional] Parameter is ignored
-    def location=(*)
-      @status.set(errors: Status::ERR_CANT_CHANGE)
-    end
-
-    # dummy method currently to stop changing filename by caller once created,
-    # @return [hash] an error flag in the ':status' variable.
-    # @param optional Parameter is ignored
-    def filename=(*)
-      @status.set(errors: Status::ERR_CANT_CHANGE)
-    end
-
     # Read the configuration key (key)
     # @example
     #   key = settings[:key]
@@ -188,7 +169,7 @@ module Confoog
     #   path = config_path
     # @return [String] Full path and filename of the configuration file.
     def config_path
-      File.expand_path(File.join(@location, @filename))
+      File.expand_path(File.join(@options[:location], @options[:filename]))
     end
 
     private
@@ -198,9 +179,7 @@ module Confoog
         @status.set(config_exists: false, errors: Status::ERR_FILE_NOT_EXIST)
         return
       end
-      file = File.open(config_path, 'w')
-      file.write(@config.to_yaml)
-      file.close
+      File.open(config_path, 'w') { |file| file.write(@config.to_yaml) }
     rescue
       @status.set(errors: Status::ERR_CANT_SAVE_CONFIGURATION)
     end
