@@ -7,12 +7,12 @@ describe Confoog::Settings, fakefs: true do
   before(:all) do
     # create an internal STDERR so we can still test this but it will not
     # clutter up the output
-    # $original_stderr = $stderr
-    # $stderr = StringIO.new
+    @original_stderr = $stderr
+    $stderr = StringIO.new
   end
 
   after(:all) do
-    # $stderr = $original_stderr
+    $stderr = @original_stderr
   end
 
   before(:each) do

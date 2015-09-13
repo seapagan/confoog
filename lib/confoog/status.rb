@@ -1,27 +1,19 @@
 # Provide error messages and console output when required.
 class Status
-  # @!attribute prefix
-  #   @return [String] String to pre-pend on any error put to console
-  attr_accessor :prefix
-  # @!attribute quiet
-  #   @return [Boolean] Do we output anything to console or not
-  attr_accessor :quiet
   # No error condition exists
   ERR_NO_ERROR = 0
   # The specified file does not exist
   ERR_FILE_NOT_EXIST = 1
-  # You cannot change location or filename after class is instantiated
-  ERR_CANT_CHANGE = 2
   # Was unable to create the specified file
-  ERR_CANT_CREATE_FILE = 4
+  ERR_CANT_CREATE_FILE = 2
   # There are no configuration variables set, so not writing empty file
-  ERR_NOT_WRITING_EMPTY_FILE = 8
+  ERR_NOT_WRITING_EMPTY_FILE = 4
   # Cannot save to the specified file for some reason
-  ERR_CANT_SAVE_CONFIGURATION = 16
+  ERR_CANT_SAVE_CONFIGURATION = 8
   # The specified file is empty so not trying to load settings from it
-  ERR_NOT_LOADING_EMPTY_FILE = 32
+  ERR_NOT_LOADING_EMPTY_FILE = 16
   # Cannot load the specified file for some reason.
-  ERR_CANT_LOAD = 64
+  ERR_CANT_LOAD = 32
 
   # Information - file was created successfully
   INFO_FILE_CREATED = 256
@@ -39,13 +31,19 @@ class Status
   # not have a message, there will be no output.
   ERROR_STRINGS = {
     ERR_FILE_NOT_EXIST => 'The specified Configuration file does not exist.',
-    ERR_CANT_CHANGE => 'Cannot change filename after creation',
     ERR_CANT_CREATE_FILE => 'Cannot create the specified Configuration file!',
     ERR_NOT_WRITING_EMPTY_FILE => 'Not saving empty configuration data!',
     ERR_CANT_SAVE_CONFIGURATION => 'Cannot save configuration data!',
     ERR_NOT_LOADING_EMPTY_FILE => 'The configuration file is empty!',
     ERR_CANT_LOAD => 'Cannot load configuration Data!'
   }
+
+  # @!attribute prefix
+  #   @return [String] String to pre-pend on any error put to console
+  attr_accessor :prefix
+  # @!attribute quiet
+  #   @return [Boolean] Do we output anything to console or not
+  attr_accessor :quiet
 
   # Class initializer.
   # @example
@@ -94,15 +92,17 @@ class Status
   # @param status [Hash] one or more hash-pairs of status information.
   # @return Unspecified
   def set(status)
-    status.each do |key, value|
-      @status[key] = value
-    end
-    return if ERROR_STRINGS[@status[:errors]].nil?
-    severity = (@status[:errors] <= 64) ? 'Error' : 'Info'
-    console_output(ERROR_STRINGS[@status[:errors]], severity)
+    status.each { |key, value| @status[key] = value }
+    return unless error_string
+    console_output(error_string, (@status[:errors] < 256) ? 'Error' : 'Info')
   end
 
   private
+
+  # return the error string corresponding to the current error number
+  def error_string
+    ERROR_STRINGS[@status[:errors]]
+  end
 
   # Display output to the console with the severity noted, unless we are quiet.
   # @param [String] message
