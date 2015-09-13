@@ -38,6 +38,13 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Status::ERR_NOT_WRITING_EMPTY_FILE
     end
 
+    it 'should not create a missing file, that would be done by #new if requested' do
+      s = subject.new(location: '/home/tests', filename: '.i_dont_exist', create_file: false)
+      s['test'] = 'this should not save'
+      s.save # put this in just to make sure both manual and autosave work as spec.
+      expect(File.exist?(s.config_path)).to be false
+    end
+
     it 'should by default save to disk if autosave: is not specified' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'

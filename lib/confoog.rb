@@ -143,8 +143,6 @@ module Confoog
       @config = YAML.load_file(config_path)
       @status.set(errors: Status::INFO_FILE_LOADED)
       if @config == false
-        # console_output("Configuration file #{config_path} is empty!",
-        #                OUTPUT_SEVERITY[:WARN])
         @status.set(errors: Status::ERR_NOT_LOADING_EMPTY_FILE)
       end
     rescue
@@ -196,6 +194,10 @@ module Confoog
     private
 
     def save_to_yaml
+      unless File.exist?(config_path)
+        @status.set(config_exists: false, errors: Status::ERR_FILE_NOT_EXIST)
+        return
+      end
       file = File.open(config_path, 'w')
       file.write(@config.to_yaml)
       file.close
