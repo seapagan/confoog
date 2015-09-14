@@ -38,13 +38,6 @@ class Status
     ERR_CANT_LOAD => 'Cannot load configuration Data!'
   }
 
-  # @!attribute prefix
-  #   @return [String] String to pre-pend on any error put to console
-  attr_accessor :prefix
-  # @!attribute quiet
-  #   @return [Boolean] Do we output anything to console or not
-  attr_accessor :quiet
-
   # Class initializer.
   # @example
   #   status = Status.new(quiet: true, prefix: "My Fab App")
@@ -54,8 +47,24 @@ class Status
     # Initialize the status container to an empty hash. Will return nil
     # for missing keys by default.
     @status = {}
-    @quiet = quiet
-    @prefix = prefix
+    # ititialize a hash to store our own internal options.
+    @options = {}
+    # and fill it.
+    @options[:quiet] = quiet
+    @options[:prefix] = prefix
+  end
+
+  # Set whether we output to the console or not
+  # @param quiet [Boolean] True to output Errors to the console.
+  # @return [Boolean] Value of #quiet
+  def quiet=(quiet)
+    @options[:quiet] = quiet
+  end
+
+  # return the current 'quiet' status
+  # @return [Boolean] Value of #quiet
+  def quiet
+    @options[:quiet]
   end
 
   # Clear the error status.
@@ -107,7 +116,7 @@ class Status
   # Display output to the console with the severity noted, unless we are quiet.
   # @param [String] message
   def console_output(message, severity)
-    return unless @quiet == false
-    $stderr.puts "#{@prefix} : #{severity} - #{message}"
+    return unless @options[:quiet] == false
+    $stderr.puts "#{@options[:prefix]} : #{severity} - #{message}"
   end
 end
