@@ -1,10 +1,12 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'simplecov'
+require 'pullreview/coverage'
 require 'coveralls'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter
+  Coveralls::SimpleCov::Formatter,
+  PullReview::Coverage::Formatter
 ]
 SimpleCov.start
 
