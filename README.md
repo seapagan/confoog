@@ -128,6 +128,9 @@ Thoughts in no particular order.
 - Restrict configuration variables to a specified subset, or to only those that already exist in the YAML file.
 - A better way of dealing with multi-level variables - i.e. nested arrays, hashes etc.
 - Write standalone tests for the 'Status' class - right now it is tested at 100% by the application tests though would probably be good to have dedicated tests too
+- Check Windows compatibility, certainly at least the tests will fail since there are issue with FakeFS on Window. Should be ok as a production Gem though (TBC)
+- Add other file formats for storing config - XML? (Yuk!)
+- Document properly on a dedicated website with full example usage and help.
 
 ## Development
 
@@ -135,7 +138,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 
-Run `rake` to run the RSpec tests, which also runs `RuboCop` and `inch --pedantic` too.
+Run `rake` to run the RSpec tests, which also runs `RuboCop`, `Reek` and `inch --pedantic` too.
 
 ## Contributing
 
@@ -145,10 +148,11 @@ Run `rake` to run the RSpec tests, which also runs `RuboCop` and `inch --pedanti
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-Please note - This Gem currently passes 100% on both [RuboCop][rubocop] and [Inch-CI][inch] (on pedantic mode), so all pull requests should do likewise.
-Running `rake` will automatically test both these along with the RSpec tests.
+Please note - This Gem currently passes 100% on [RuboCop][rubocop], [Reek][reek] and [Inch-CI][inch] (on pedantic mode), so all pull requests should do likewise. Ask for guidance if needed.
+Running `rake` will automatically test all 3 of those along with the RSpec tests. Note that Failures of Rubocop will cause the CI (Travis) to fail, however 'Reek' failures will not.
 
 [rubocop]: https://github.com/bbatsov/rubocop
+[reek]: https://github.com/troessner/reek
 [inch]: https://inch-ci.org
 
 ## Versioning
