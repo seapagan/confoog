@@ -1,7 +1,7 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
-require 'reek/rake/task'
+
 require 'inch/rake'
 
 RSpec::Core::RakeTask.new(:spec)
@@ -14,10 +14,18 @@ Inch::Rake::Suggest.new do |suggest|
   suggest.args << '--pedantic'
 end
 
-Reek::Rake::Task.new do |t|
-  t.fail_on_error = false
-  t.verbose       = true
-  t.reek_opts     = '-U'
+# reek is not comp[atible with Ruby < 2.0]
+if RUBY_VERSION > '2.0'
+  require 'reek/rake/task'
+  Reek::Rake::Task.new do |t|
+    t.fail_on_error = false
+    t.verbose       = true
+    t.reek_opts     = '-U'
+  end
+else
+  task :reek do
+    # Empty task
+  end
 end
 
 task default: [:rubocop, :inch, :reek, :spec]

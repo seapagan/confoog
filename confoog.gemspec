@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.extensions    = ['ext/reek_or_no_reek.rb']
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
@@ -31,5 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'inch'
   spec.add_development_dependency 'simplecov', '~> 0.10'
   spec.add_development_dependency 'pullreview-coverage'
-  spec.add_development_dependency 'reek', '~> 3.3'
+
+  # Depend on Ruby version
+  spec.add_development_dependency 'reek', '~> 3.3' if RUBY_VERSION > '2.0'
 end
