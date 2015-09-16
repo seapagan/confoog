@@ -1,6 +1,5 @@
-# Confoog
-[![Gem Version](https://badge.fury.io/rb/confoog.svg)](http://badge.fury.io/rb/confoog)
-[![Build Status](https://travis-ci.org/seapagan/confoog.svg)](https://travis-ci.org/seapagan/confoog)
+# Confoog [![Gem Version](https://badge.fury.io/rb/confoog.svg)](http://badge.fury.io/rb/confoog) [![Build Status](https://travis-ci.org/seapagan/confoog.svg)](https://travis-ci.org/seapagan/confoog)
+
 [![Dependency Status](https://gemnasium.com/seapagan/confoog.svg)](https://gemnasium.com/seapagan/confoog)
 [![Coverage Status](https://coveralls.io/repos/seapagan/confoog/badge.svg?branch=master&service=github)](https://coveralls.io/github/seapagan/confoog?branch=master)
 [![Code Climate](https://codeclimate.com/github/seapagan/confoog/badges/gpa.svg)](https://codeclimate.com/github/seapagan/confoog)
