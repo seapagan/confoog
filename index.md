@@ -104,7 +104,7 @@ autoload: false
 autosave: true
 {% endhighlight %}
 
-Confoog will set the following error constants which will be returned in the `.status['errors']` variable as needed :
+Confoog will set the following error constants which will be returned in the `.status[:errors]` variable as needed :
 
 {% highlight ruby %}
 ERR_NO_ERROR = 0 # no error condition, command was succesfull
