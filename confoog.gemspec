@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'This will add a class that takes care of all your configuration needs for Ruby scripts and Gems. Simple and basic'
   spec.description   = 'A simple Gem to add YAML configuration files to your Ruby script or Gem'
-  spec.homepage      = 'https://github.com/seapagan/confoog'
+  spec.homepage      = 'http://confoog.seapagan.net'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
