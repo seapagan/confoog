@@ -67,7 +67,7 @@ settings.save # save all current parameters to the YAML file
 settings.load # load the settings from YAML file.
 {% endhighlight %}
 
-Confoog will take several parameters on creation, to specify the default config file and location. For example :
+Confoog will also take several optional parameters on creation, for example to specify the default config file and location.
 
 {% highlight ruby %}
 settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
