@@ -104,7 +104,7 @@ autoload: false
 autosave: true
 ```
 
-Confoog will set the following error constants which will be returned in the `.status['errors']` variable as needed :
+Confoog will set the following error constants which will be returned in the `.status[:errors]` variable as needed :
 
 ```ruby
 ERR_NO_ERROR = 0 # no error condition, command was succesfull
