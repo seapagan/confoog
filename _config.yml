@@ -1,12 +1,11 @@
 # Site settings
-title: Confoog - YAML Configuration for your Ruby applications.
+title: Confoog
+tagline: YAML Configuration for your Ruby applications.
 email: seapagan@gmail.com
 description: >
-  Confoog Open Source Ruby Gem YAML Configuration 
+  Confoog Open Source Ruby Gem YAML Configuration
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://confoog.seapagan.net" # the base hostname & protocol for your site
-twitter_username: seapagan
-github_username:  seapagan
 
 # Build settings
 markdown: kramdown
