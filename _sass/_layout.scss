@@ -201,6 +201,10 @@
     font-size: 42px;
     letter-spacing: -1px;
     line-height: 1;
+    text-align: center;
+    border-bottom: solid;
+    border-bottom-width: thin;
+    padding-top: 30px;
 
     @include media-query($on-laptop) {
         font-size: 36px;
