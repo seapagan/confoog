@@ -29,9 +29,9 @@ Or install it yourself as:
     $ gem install confoog
 
 ## Usage
-Currently Confoog will not allow 'nested' configuration types, however each variable can be an array or hash so multiple settings can be recorded for each variable and accessed (for a hash) by `settings[variable][hash_key]` or array using `settings[array].each`. In other words, treat the return from `settings[var]` as the type it contains. See examples below.
+Very basic usage is as below. For full documentation, see the [Confoog Web Site][confoog]
 
-By default, each time a configuration variable is created or changed the file on disk will be updated with this addition or change. If you intend to make a lot of consecutive changes or do not want the small performance hit of this, pass `autosave: false` as a parameter to #new, or set it false using the #autosave accessor.
+[confoog]: http://confoog.seapagan.net
 
 ```ruby
 require 'confoog'
@@ -41,85 +41,7 @@ settings[:var] = value
 settings[:array] = [1, 2, 3, 4]
 settings[42] = "Meaning of life"
 settings[:urls] = ["https://www.mywebsite.com", "https://www.anothersite.com/a/page.html"]
-
-settings[:urls].each do |url|
-  puts url
-end
-# https://www.mywebsite.com
-# https://www.anothersite.com/a/page.html
-# => ["https://www.mywebsite.com", "https://www.anothersite.com/a/page.html"]
-
-settings[:dont_exist]
-# => nil
-
-a_variable = 50
-settings[a_variable] = {:one => "for the money", :two => "for the show", :three => "to get ready"}
-settings[50]
-# => {:one=>"for the money", :two=>"for the show", :three=>"to get ready"}
-settings[50][:two]
-# => "for the show"
-
-settings.quiet = true # squelch any error or status messages to console
-
-settings.autosave = false # disable autosave if it has been enabled with #new or #autosave
-
-settings.save # save all current parameters to the YAML file
-
-settings.load # load the settings from YAML file.
 ```
-
-Confoog will take several parameters on creation, to specify the default config file and location. For example :
-
-```ruby
-settings = Confoog::Settings.new(location: '/home/myuser', filename: '.foo-settings')
-```
-
-There are other optional flags or variables that can be passed on creation:
-
-```ruby
-# Should a missing configuration file be created or not
-create_file: true | false
-
-# Specify an optional prefix before any error messages
-prefix: 'My Application'
-
-# Should we avoid outputting errors to the console? (ie in a GUI app)
-quiet: true | false
-
-# Should we automatically load the configuration file when the class is created?
-autoload: true | false
-
-# Should we automatically save the configuration file when a variable is created or changed?
-autosave: true | false
-```
-If any of these are not specified, Confoog will use the following defaults :
-
-```ruby
-location: '~/'
-filename: '.confoog'
-create_file: false
-prefix: 'Configuration'
-quiet: false
-autoload: false
-autosave: true
-```
-
-Confoog will set the following error constants which will be returned in the `.status[:errors]` variable as needed :
-
-```ruby
-ERR_NO_ERROR = 0 # no error condition, command was succesfull
-ERR_FILE_NOT_EXIST = 1 # specified configuration file does not exist
-ERR_CANT_CREATE_FILE = 2 # cannot create the requested configuration file
-ERR_NOT_WRITING_EMPTY_FILE = 4 # not attempting to save an empty configuration
-ERR_CANT_SAVE_CONFIGURATION = 8 # Failed to save the configuration file
-ERR_NOT_LOADING_EMPTY_FILE = 16 # not atempting to load an empty config file
-ERR_CANT_LOAD = 32 # Cannot load configuration data from file.
-
-INFO_FILE_CREATED = 256 # Information - specified file was created
-INFO_FILE_LOADED = 512 # Information - Config file was loaded successfully
-```
-
-These are generally to do with existence and creation of configuration files.
 
 ## To Do
 
