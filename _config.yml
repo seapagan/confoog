@@ -1,6 +1,6 @@
 # Site settings
 title: Confoog
-tagline: YAML Configuration for your Ruby applications.
+tagline: Use YAML Configuration files in your Ruby applications and Gems.
 email: seapagan@gmail.com
 description: >
   Confoog Open Source Ruby Gem YAML Configuration
