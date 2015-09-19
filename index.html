@@ -7,7 +7,12 @@ layout: default
       {% capture id %}{{ page.id | remove:'/' | downcase }}{% endcapture %}
       <div id="{{id}}" class="section p-{{id}}">
         <div class="container" {{ page.style }}">
-            <h2 class="post-title">{{ page.title }}</h5>
+            <h2 class="post-title">
+              {% if page.git-icon %}
+                <span class="mega-octicon octicon-{{ page.git-icon }}"></span>
+              {% endif %}
+              {{ page.title }}
+            </h2>
           {{ page.content }}
         </div>
       </div>
