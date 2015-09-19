@@ -1,0 +1,234 @@
+//colors
+$color_cream_approx: #ffffcc;
+$color_faded_jade_approx: #408080;
+$red: #ff0000;
+$color_japanese_laurel_approx: #008000;
+$color_storm_dust_approx: #666666;
+$color_pirate_gold_approx: #bc7a00;
+$color_bright_red_approx: #a00000;
+$navy_blue: #000080;
+$color_forest_green_approx: #00a000;
+$color_suva_gray_approx: #888888;
+$color_seance_approx: #800080;
+$color_science_blue_approx: #0044dd;
+$color_shiraz_approx: #b00040;
+$color_thunderbird_approx: #ba2121;
+$color_wasabi_approx: #7d9029;
+$blue: #0000ff;
+$color_red_berry_approx: #880000;
+$color_electric_violet_approx: #aa22ff;
+$color_mountain_mist_approx: #999999;
+$color_valencia_approx: #d2413a;
+$color_sahara_approx: #a0a000;
+$color_deep_koamaru_approx: #19177c;
+$color_pink_swan_approx: #bbbbbb;
+$color_bourbon_approx: #bb6622;
+$color_turkish_rose_approx: #bb6688;
+
+.hll {
+	background-color: $color_cream_approx;
+}
+.c {
+	color: $color_faded_jade_approx;
+	font-style: italic;
+}
+.err {
+	border: 1px solid $red;
+}
+.k {
+	color: $color_japanese_laurel_approx;
+	font-weight: bold;
+}
+.o {
+	color: $color_storm_dust_approx;
+}
+.cm {
+	color: $color_faded_jade_approx;
+	font-style: italic;
+}
+.cp {
+	color: $color_pirate_gold_approx;
+}
+.c1 {
+	color: $color_faded_jade_approx;
+	font-style: italic;
+}
+.cs {
+	color: $color_faded_jade_approx;
+	font-style: italic;
+}
+.gd {
+	color: $color_bright_red_approx;
+}
+.ge {
+	font-style: italic;
+}
+.gr {
+	color: $red;
+}
+.gh {
+	color: $navy_blue;
+	font-weight: bold;
+}
+.gi {
+	color: $color_forest_green_approx;
+}
+.go {
+	color: $color_suva_gray_approx;
+}
+.gp {
+	color: $navy_blue;
+	font-weight: bold;
+}
+.gs {
+	font-weight: bold;
+}
+.gu {
+	color: $color_seance_approx;
+	font-weight: bold;
+}
+.gt {
+	color: $color_science_blue_approx;
+}
+.kc {
+	color: $color_japanese_laurel_approx;
+	font-weight: bold;
+}
+.kd {
+	color: $color_japanese_laurel_approx;
+	font-weight: bold;
+}
+.kn {
+	color: $color_japanese_laurel_approx;
+	font-weight: bold;
+}
+.kp {
+	color: $color_japanese_laurel_approx;
+}
+.kr {
+	color: $color_japanese_laurel_approx;
+	font-weight: bold;
+}
+.kt {
+	color: $color_shiraz_approx;
+}
+.m {
+	color: $color_storm_dust_approx;
+}
+.s {
+	color: $color_thunderbird_approx;
+}
+.na {
+	color: $color_wasabi_approx;
+}
+.nb {
+	color: $color_japanese_laurel_approx;
+}
+.nc {
+	color: $blue;
+	font-weight: bold;
+}
+.no {
+	color: $color_red_berry_approx;
+}
+.nd {
+	color: $color_electric_violet_approx;
+}
+.ni {
+	color: $color_mountain_mist_approx;
+	font-weight: bold;
+}
+.ne {
+	color: $color_valencia_approx;
+	font-weight: bold;
+}
+.nf {
+	color: $blue;
+}
+.nl {
+	color: $color_sahara_approx;
+}
+.nn {
+	color: $blue;
+	font-weight: bold;
+}
+.nt {
+	color: $color_japanese_laurel_approx;
+	font-weight: bold;
+}
+.nv {
+	color: $color_deep_koamaru_approx;
+}
+.ow {
+	color: $color_electric_violet_approx;
+	font-weight: bold;
+}
+.w {
+	color: $color_pink_swan_approx;
+}
+.mb {
+	color: $color_storm_dust_approx;
+}
+.mf {
+	color: $color_storm_dust_approx;
+}
+.mh {
+	color: $color_storm_dust_approx;
+}
+.mi {
+	color: $color_storm_dust_approx;
+}
+.mo {
+	color: $color_storm_dust_approx;
+}
+.sb {
+	color: $color_thunderbird_approx;
+}
+.sc {
+	color: $color_thunderbird_approx;
+}
+.sd {
+	color: $color_thunderbird_approx;
+	font-style: italic;
+}
+.s2 {
+	color: $color_thunderbird_approx;
+}
+.se {
+	color: $color_bourbon_approx;
+	font-weight: bold;
+}
+.sh {
+	color: $color_thunderbird_approx;
+}
+.si {
+	color: $color_turkish_rose_approx;
+	font-weight: bold;
+}
+.sx {
+	color: $color_japanese_laurel_approx;
+}
+.sr {
+	color: $color_turkish_rose_approx;
+}
+.s1 {
+	color: $color_thunderbird_approx;
+}
+.ss {
+	color: $color_deep_koamaru_approx;
+}
+.bp {
+	color: $color_japanese_laurel_approx;
+}
+.vc {
+	color: $color_deep_koamaru_approx;
+}
+.vg {
+	color: $color_deep_koamaru_approx;
+}
+.vi {
+	color: $color_deep_koamaru_approx;
+}
+.il {
+	color: $color_storm_dust_approx;
+}
