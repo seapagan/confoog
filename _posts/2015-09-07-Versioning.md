@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Versioning"
+git-icon: "diff"
 ---
 This library aims to adhere to [Semantic Versioning 2.0.0][semver]. Violations
 of this scheme should be reported as bugs. Specifically, if a minor or patch

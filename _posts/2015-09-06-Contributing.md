@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Contributing"
+git-icon: "git-pull-request"
 ---
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
