@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Installation"
+git-icon: "cloud-download"
 ---
 
 Add this line to your application's Gemfile:

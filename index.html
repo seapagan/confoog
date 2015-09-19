@@ -3,21 +3,16 @@ layout: default
 ---
 <body>
   <div id="main">
-
-    <nav><ul>
-      {% for node in site.posts reversed %}
-        {% capture id %}{{ node.id | remove:'/' | downcase }}{% endcapture %}
-          <!-- <li class="site-nav"> <a href="#{{id}}">{{node.title}}</a> </li> -->
-      {% endfor %}
-    </ul></nav>
-
     {% for page in site.posts reversed %}
       {% capture id %}{{ page.id | remove:'/' | downcase }}{% endcapture %}
       <div id="{{id}}" class="section p-{{id}}">
-        <div class="container {{ page.style }}">
-          {% if page.title <> "Intro" %}
-            <h2 class="post-title">{{ page.title }}</h5>
-          {% endif %}
+        <div class="container" {{ page.style }}">
+            <h2 class="post-title">
+              {% if page.git-icon %}
+                <span class="mega-octicon octicon-{{ page.git-icon }}"></span>
+              {% endif %}
+              {{ page.title }}
+            </h2>
           {{ page.content }}
         </div>
       </div>
