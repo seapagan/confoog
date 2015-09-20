@@ -1,5 +1,4 @@
 ---
-layout: page
 title: "Installation"
 git-icon: "cloud-download"
 ---

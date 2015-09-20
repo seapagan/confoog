@@ -1,5 +1,4 @@
 ---
-layout: page
 title: "Contributing"
 git-icon: "git-pull-request"
 ---
