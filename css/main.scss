@@ -5,12 +5,13 @@
 
 @media (min-width: 1000px) {
     .container{
-        max-width: 800px;
+        max-width: 900px;
     }
 }
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
         "layout",
         "syntax",
+        // "github",
         "bootstrap"
 ;

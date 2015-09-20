@@ -6,7 +6,7 @@ layout: default
     {% for page in site.posts reversed %}
       {% capture id %}{{ page.id | remove:'/' | downcase }}{% endcapture %}
       <div id="{{id}}" class="section p-{{id}}">
-        <div class="container" {{ page.style }}">
+        <div class="container" {{ page.style }}>
             <h2 class="post-title">
               {% if page.git-icon %}
                 <span class="mega-octicon octicon-{{ page.git-icon }}"></span>
@@ -14,6 +14,7 @@ layout: default
               {{ page.title }}
             </h2>
           {{ page.content }}
+          <div class="col-sm-4 col-sm-offset-8 link-to-top"><a href="#"><span class="fa fa-arrow-up"></span></span> top</a></div>
         </div>
       </div>
     {% endfor %}

@@ -1,5 +1,4 @@
 ---
-layout: page
 title: "Versioning"
 git-icon: "diff"
 ---
