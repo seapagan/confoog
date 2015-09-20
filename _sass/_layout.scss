@@ -14,6 +14,7 @@
     vertical-align: bottom;
     border-bottom: solid;
     border-bottom-width: thin;
+    margin-bottom: 10px;
 }
 
 .page-content {
@@ -32,6 +33,10 @@
     vertical-align: top;
 }
 
+.menu-home {
+    font-size: 32px;
+}
+
 .post-title {
     font-size: 42px;
     letter-spacing: -1px;
@@ -43,6 +48,14 @@
 }
 
 .external-link {
+    text-align: right;
+    text-decoration: none;
+    :hover {
+      text-decoration: none;
+    }
+}
+
+.link-to-top {
     text-align: right;
     text-decoration: none;
     :hover {
