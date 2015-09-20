@@ -31,7 +31,7 @@ Or install it yourself as:
 ## Usage
 Very basic usage is as below. For full documentation, see the [Confoog Web Site][confoog]
 
-[confoog]: http://confoog.seapagan.net
+[confoog]: http://seapagan.github.io/confoog
 
 ```ruby
 require 'confoog'
