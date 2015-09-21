@@ -5,7 +5,7 @@ email: seapagan@gmail.com
 description: >
   Confoog Open Source Ruby Gem YAML Configuration
 baseurl: "" # the subpath of your site, e.g. /blog/
-#url: "http://confoog.seapagan.net" # the base hostname & protocol for your site
+url: "http://confoog.seapagan.net" # the base hostname & protocol for your site
 
 # Build settings
 markdown: kramdown
