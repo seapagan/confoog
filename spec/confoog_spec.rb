@@ -38,60 +38,60 @@ describe Confoog do
 
     context 'with no parameters' do
       let(:settings) { subject.new }
-      it 'should create the class with no errors' do
+      it 'creates the class with no errors' do
         expect(settings).to be_an_instance_of subject
         expect(settings.status[:errors]).to eq Status::ERR_NO_ERROR
       end
-      it 'should set sensible defaults' do
+      it 'sets sensible defaults' do
         expect(settings.config_path).to eq File.expand_path('~/.confoog')
       end
     end
 
     context 'with parameters' do
-      it 'should accept both location and filename' do
+      it 'accepts both location and filename' do
         settings = subject.new(filename: '.myconfigfile', location: '/put/it/here')
         expect(settings.config_path).to eq '/put/it/here/.myconfigfile'
         expect(settings.status[:errors]).to eq Status::ERR_NO_ERROR
       end
-      it 'should allow us to specify the default prefix for console messages and output this to STDERR' do
+      it 'allows us to specify the default prefix for console messages and output this to STDERR' do
         expect($stderr).to receive(:puts).with(/^MyProg :/)
         subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :')
       end
-      it 'it should not output any messages if the quiet: option is passed.' do
+      it 'does not output any messages if the quiet: option is passed.' do
         expect($stderr).not_to receive(:puts)
         subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
       end
-      it 'should allow us to change this at any time though' do
+      it 'allows us to change this at any time though' do
         settings = subject.new(location: '/home/tests', filename: '.i_dont_exist', prefix: 'MyProg :', quiet: true)
         settings.quiet = false
         expect($stderr).to receive(:puts) # not fussed what text, just that it exists
         settings.save
         expect(settings.quiet).to be false
       end
-      it 'should return the full filename and path in #config_path' do
+      it 'returns the full filename and path in #config_path' do
         settings = subject.new(location: '/home/tests', filename: '.i_do_exist')
         expect(settings.config_path).to eq '/home/tests/.i_do_exist'
       end
     end
 
-    context 'it should check the existence of the specified configuration file' do
-      it 'should set status[config_exists] to false if this does not exist' do
+    context 'should check the existence of the specified configuration file' do
+      it 'sets status[config_exists] to false if this does not exist' do
         settings = subject.new(location: '/home/tests', filename: '.i_dont_exist')
         expect(settings.status[:config_exists]).to be false
         expect(settings.status[:errors]).to eq Status::ERR_FILE_NOT_EXIST
       end
-      it 'should set status[config_exists] to true if this does exist' do
+      it 'sets status[config_exists] to true if this does exist' do
         settings = subject.new(location: '/home/tests', filename: '.i_do_exist')
         expect(settings.status[:config_exists]).to be true
         expect(settings.status[:errors]).to eq Status::ERR_NO_ERROR
       end
-      it 'should create this file if create_file: true is passed and file does not exist' do
+      it 'creates this file if create_file: true is passed and file does not exist' do
         settings = subject.new(location: '/home/tests', filename: '.i_should_be_created', create_file: true)
         expect(settings.status[:config_exists]).to be true
         expect(File).to exist('/home/tests/.i_should_be_created')
         expect(settings.status[:errors]).to eq Status::INFO_FILE_CREATED
       end
-      it 'should return a relevant error if the file was not able to be created' do
+      it 'returns a relevant error if the file was not able to be created' do
         # directory not exist
         settings = subject.new(location: '/directory/doesnt/exist', filename: '.i_wont_be_created', create_file: true)
         expect(settings.status[:errors]).to eq Status::ERR_CANT_CREATE_FILE

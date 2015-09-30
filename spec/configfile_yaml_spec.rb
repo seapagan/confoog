@@ -30,7 +30,7 @@ describe Confoog::Settings, fakefs: true do
   end
 
   context 'when writing config file' do
-    it 'should not write to file unless there is actually config data' do
+    it 'does not write to file unless there is actually config data' do
       s = subject.new(location: '/home/tests', create_file: true)
       expect($stderr).to receive(:puts).with(/empty/)
       s.save
@@ -38,20 +38,20 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Status::ERR_NOT_WRITING_EMPTY_FILE
     end
 
-    it 'should not create a missing file, that would be done by #new if requested' do
+    it 'does not create a missing file, that would be done by #new if requested' do
       s = subject.new(location: '/home/tests', filename: '.i_dont_exist', create_file: false)
       s['test'] = 'this should not save'
       s.save # put this in just to make sure both manual and autosave work as spec.
       expect(File.exist?(s.config_path)).to be false
     end
 
-    it 'should by default save to disk if autosave: is not specified' do
+    it 'by default saves to disk if autosave: is not specified' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'
       expect(File.read('/home/tests/.confoog')).to include '/home/tests'
     end
 
-    it 'should save an easy config to valid YAML' do
+    it 'saves an easy config to valid YAML' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'
       s['recurse'] = true
@@ -59,7 +59,7 @@ describe Confoog::Settings, fakefs: true do
       expect(FileUtils.compare_file('/home/tests/.confoog', '/home/tests/reference.yaml')).to be_truthy
     end
 
-    it 'should return error status but raise no exception if it cannot write to the file' do
+    it 'returns error status but raise no exception if it cannot write to the file' do
       s = subject.new(location: '/home/tests', create_file: true)
       s['location'] = '/home/tests'
       s['recurse'] = true
@@ -71,13 +71,13 @@ describe Confoog::Settings, fakefs: true do
     end
 
     context 'when auto_save: true' do
-      it 'should automatically save when a new variable is added' do
+      it 'automatically saves when a new variable is added' do
         s = subject.new(location: '/home/tests', create_file: true, autosave: true)
         s['location'] = '/home/tests'
         expect(File.read('/home/tests/.confoog')).to include '/home/tests'
       end
 
-      it 'should automatically save when a variable is changed' do
+      it 'automatically saves when a variable is changed' do
         s = subject.new(location: '/home/tests', create_file: true, autosave: true)
         s['location'] = '/home/tests'
         s['location'] = '/usr/my/directory'
@@ -93,7 +93,7 @@ describe Confoog::Settings, fakefs: true do
     end
 
     context 'using the #autosave method before changing or adding variables' do
-      it 'should correctly set and read the #autosave status' do
+      it 'correctly sets and read the #autosave status' do
         s = subject.new(location: '/home/tests', create_file: true, autosave: true)
         s.autosave = false
         expect(s.autosave).to be false
@@ -101,14 +101,14 @@ describe Confoog::Settings, fakefs: true do
         expect(s.autosave).to be true
       end
 
-      it 'should not save if #autosave is set false' do
+      it 'does not save if #autosave is set false' do
         s = subject.new(location: '/home/tests', create_file: true, autosave: true)
         s.autosave = false
         s['location'] = '/home/tests'
         expect(File.read('/home/tests/.confoog')).not_to include '/home/tests'
       end
 
-      it 'should save if #autosave is true' do
+      it 'saves if #autosave is true' do
         s = subject.new(location: '/home/tests', create_file: true, autosave: false)
         s.autosave = true
         s['location'] = '/home/tests'
@@ -118,14 +118,14 @@ describe Confoog::Settings, fakefs: true do
   end
 
   context 'when loading config file' do
-    it 'should correctly load a simple YAML file' do
+    it 'correctly loads a simple YAML file' do
       s = subject.new(location: '/home/tests', filename: 'reference.yaml')
       s.load
       expect(s['location']).to eq '/home/tests'
       expect(s['recurse']).to eq true
     end
 
-    it 'should complain if we try to load a non-existing file' do
+    it 'complains if we try to load a non-existing file' do
       expect($stderr).to receive(:puts).with(/does not exist/)
       s = subject.new(location: '/home/tests', filename: '.i_dont_exist')
       expect($stderr).to receive(:puts).with(/Cannot load configuration Data/)
@@ -133,7 +133,7 @@ describe Confoog::Settings, fakefs: true do
       expect(s.status[:errors]).to eq Status::ERR_CANT_LOAD
     end
 
-    it 'should comment if the file is empty' do
+    it 'comments if the file is empty' do
       s = subject.new(location: '/home/tests', create_file: true)
       expect($stderr).to receive(:puts).with(/empty/)
       s.load
@@ -142,7 +142,7 @@ describe Confoog::Settings, fakefs: true do
   end
 
   context 'when created with auto_load: true' do
-    it 'should automatically load the specified configuration file' do
+    it 'automatically loads the specified configuration file' do
       s = subject.new(location: '/home/tests', filename: 'reference.yaml', autoload: true)
       expect(s['location']).to eq '/home/tests'
       expect(s['recurse']).to be true
@@ -150,7 +150,7 @@ describe Confoog::Settings, fakefs: true do
   end
 
   context 'when created with auto_load: false' do
-    it 'should not load the specified configuration file' do
+    it 'does not load the specified configuration file' do
       s = subject.new(location: '/home/tests', filename: 'reference.yaml', autoload: false)
       expect(s['location']).to be nil
       expect(s['recurse']).to be nil
@@ -158,7 +158,7 @@ describe Confoog::Settings, fakefs: true do
   end
 
   context 'when created without specifying an auto_load: value' do
-    it 'should not load the specified configuration file' do
+    it 'does not load the specified configuration file' do
       s = subject.new(location: '/home/tests', filename: 'reference.yaml')
       expect(s['location']).to be nil
       expect(s['recurse']).to be nil
