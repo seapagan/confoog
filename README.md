@@ -53,7 +53,7 @@ Thoughts in no particular order.
 - Check Windows compatibility, certainly at least the tests will fail since there are issue with FakeFS on Window. Should be ok as a production Gem though (TBC)
 - Add other file formats for storing config - XML? (Yuk!)
 - Document properly on a dedicated website with full example usage and help.
-- Add option to use config file in the script director, if existing, instead of the specified one. Will make developing of Gems and Apps using this a bit easier.
+- Add an option to use a config file stored in the script directory, if existing, instead of the specified one. Will make developing of Gems and Apps using this a bit easier.
 
 ## Development
 
