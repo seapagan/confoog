@@ -25,7 +25,7 @@ class Status
     ERR: 'Error',
     WARN: 'Warning',
     INFO: 'Information'
-  }
+  }.freeze
 
   # Hash containing the error messages for each ERR condition. If an ERR does
   # not have a message, there will be no output.
@@ -36,7 +36,7 @@ class Status
     ERR_CANT_SAVE_CONFIGURATION => 'Cannot save configuration data!',
     ERR_NOT_LOADING_EMPTY_FILE => 'The configuration file is empty!',
     ERR_CANT_LOAD => 'Cannot load configuration Data!'
-  }
+  }.freeze
 
   # Class initializer.
   # @example

@@ -8,7 +8,7 @@ require 'yaml'
 # Contains Class Confoog::Settings
 module Confoog
   # The default filename used if none specified when created.
-  DEFAULT_CONFIG = '.confoog'
+  DEFAULT_CONFIG = '.confoog'.freeze
 
   # Hash containing default values of initialization variables
   DEFAULT_OPTIONS = {
@@ -19,7 +19,7 @@ module Confoog
     filename: DEFAULT_CONFIG,
     autoload: false,
     autosave: true
-  }
+  }.freeze
 
   # Provide an encapsulated class to access a YAML configuration file.
   # @!attribute [r] status
