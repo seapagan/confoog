@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.10'
   spec.add_development_dependency 'pullreview-coverage'
   spec.add_development_dependency 'should_not'
+  spec.add_development_dependency 'wwtd'
 
   # Depend on Ruby version
   spec.add_development_dependency 'reek', '~> 3.3' if RUBY_VERSION > '2.0'
