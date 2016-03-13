@@ -54,6 +54,7 @@ Thoughts in no particular order.
 - Add other file formats for storing config - XML? (Yuk!)
 - Document properly on a dedicated website with full example usage and help.
 - Add an option to use a config file stored in the script directory, if existing, instead of the specified one. Will make developing of Gems and Apps using this a bit easier.
+- Add ability to generate custom error messages (eg if the config file is missing and similar)
 
 ## Development
 
