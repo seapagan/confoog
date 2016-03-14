@@ -55,6 +55,7 @@ Thoughts in no particular order.
 - Document properly on a dedicated website with full example usage and help.
 - Add an option to use a config file stored in the script directory, if existing, instead of the specified one. Will make developing of Gems and Apps using this a bit easier.
 - Add ability to generate custom error messages (eg if the config file is missing and similar)
+- Add 'transient' options that will not be saved to the YAML file. This allows Confoog to be used for temp variable storage also without making them permanent.
 
 ## Development
 
