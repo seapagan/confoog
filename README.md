@@ -3,8 +3,11 @@
 [![Dependency Status](https://gemnasium.com/seapagan/confoog.svg)](https://gemnasium.com/seapagan/confoog)
 [![Coverage Status](https://coveralls.io/repos/seapagan/confoog/badge.svg?branch=master&service=github)](https://coveralls.io/github/seapagan/confoog?branch=master)
 [![Code Climate](https://codeclimate.com/github/seapagan/confoog/badges/gpa.svg)](https://codeclimate.com/github/seapagan/confoog)
-[![Inline docs](http://inch-ci.org/github/seapagan/confoog.svg?branch=master)](http://inch-ci.org/github/seapagan/confoog)
 [![PullReview stats](https://www.pullreview.com/github/seapagan/confoog/badges/master.svg?)](https://www.pullreview.com/github/seapagan/confoog/reviews/master)
+
+[![Issue Stats](http://issuestats.com/github/seapagan/confoog/badge/pr?style=flat)](http://issuestats.com/github/seapagan/confoog)
+[![Issue Stats](http://issuestats.com/github/seapagan/confoog/badge/issue?style=flat)](http://issuestats.com/github/seapagan/confoog)
+[![Inline docs](http://inch-ci.org/github/seapagan/confoog.svg?branch=master)](http://inch-ci.org/github/seapagan/confoog)
 
 A simple Gem to add YAML configuration files to your Ruby script / Gem.
 
